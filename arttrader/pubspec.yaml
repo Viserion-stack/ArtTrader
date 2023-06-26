@@ -40,6 +40,9 @@ dependencies:
   equatable: ^2.0.5
   google_sign_in: ^6.1.0
   meta: ^1.8.0
+  bloc: ^8.1.0
+  flow_builder: ^0.0.9
+  formz: ^0.6.0
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +51,12 @@ dev_dependencies:
   firebase_core_platform_interface: ^4.8.0
   mocktail: ^0.3.0
   plugin_platform_interface: ^2.1.4
+
+
+dependency_overrides:
+  bloc: ^8.1.0
+  bloc_test: ^9.1.0
+  flutter_bloc: ^8.1.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
