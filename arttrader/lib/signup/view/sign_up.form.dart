@@ -112,7 +112,7 @@ class _ConfirmPasswordInput extends StatelessWidget {
   }
 }
 
-class _sgnUpButton extends StatelessWidget {
+class _SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpCubit, SignUpState>(
