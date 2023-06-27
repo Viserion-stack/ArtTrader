@@ -1,4 +1,3 @@
-import 'package:arttrader/domain/models/login/password.dart';
 import 'package:arttrader/login/cubit/login_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -139,8 +138,8 @@ class _GoogleLoginButton extends StatelessWidget {
     });
   }
 }
-
-class _SingUpButton extends StatelessWidget {
+       
+class _SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
