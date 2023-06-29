@@ -1,3 +1,4 @@
+import 'package:arttrader/domain/repositories/Art/art_repository.dart';
 import 'package:arttrader/domain/repositories/Authentication/authentication.dart';
 import 'package:arttrader/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,10 +14,12 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   final authenticationRepository = AuthenticationRepository();
+  final artRepository = ArtRepository();
   await authenticationRepository.user.first;
   runApp(
     App(
       authenticationRepository: authenticationRepository,
+      artRepository: artRepository,
     ),
   );
 }
