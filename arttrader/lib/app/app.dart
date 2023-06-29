@@ -20,18 +20,18 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AppBloc>(
+    return RepositoryProvider.value(
+      value: _authenticationRepository,
+      child: BlocProvider<AppBloc>(
+        create: (BuildContext context) =>
+            AppBloc(authenticationRepository: _authenticationRepository),
+        child: BlocProvider<ArtBloc>(
           create: (BuildContext context) =>
-              AppBloc(authenticationRepository: _authenticationRepository),
+              ArtBloc(artRepository: _artRepository)
+                ..add(const GetCollecionRequested('art')),
+          child: const AppView(),
         ),
-        BlocProvider<ArtBloc>(
-          create: (BuildContext context) =>
-              ArtBloc(artRepository: _artRepository),
-        ),
-      ],
-      child: const AppView(),
+      ),
     );
   }
 }
