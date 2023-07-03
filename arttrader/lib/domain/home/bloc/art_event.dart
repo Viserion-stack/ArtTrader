@@ -9,6 +9,19 @@ final class GetCollecionRequested extends ArtEvent {
   const GetCollecionRequested(this.collectionName);
 }
 
+final class GetArtsRequested extends ArtEvent {
+  const GetArtsRequested();
+}
+
+final class OpenDetailPage extends ArtEvent {
+  const OpenDetailPage();
+}
+
+final class GetSelectedArt extends ArtEvent {
+  final String artId;
+  const GetSelectedArt(this.artId);
+}
+
 final class AddItemToCollectionRequested extends ArtEvent {
   const AddItemToCollectionRequested();
 }

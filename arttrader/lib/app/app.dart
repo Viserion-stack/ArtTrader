@@ -1,5 +1,6 @@
 import 'package:arttrader/app/bloc/app_bloc.dart';
 import 'package:arttrader/domain/home/bloc/art_bloc.dart';
+import 'package:arttrader/domain/home/widgets/custom_bottom_bar.dart';
 import 'package:arttrader/domain/repositories/Art/art_repository.dart';
 import 'package:arttrader/domain/repositories/Authentication/authentication.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,10 @@ class App extends StatelessWidget {
         child: BlocProvider<ArtBloc>(
           create: (BuildContext context) =>
               ArtBloc(artRepository: _artRepository)
-                ..add(const GetCollecionRequested('art')),
+                ..add(
+                  //const GetCollecionRequested('art'),
+                  const GetArtsRequested(),
+                ),
           child: const AppView(),
         ),
       ),
@@ -42,10 +46,19 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+          colorSchemeSeed: const Color(0xff386a20), useMaterial3: true),
       //TODO theme: theme,
-      home: FlowBuilder<AppStatus>(
-        state: context.select((AppBloc bloc) => bloc.state.status),
-        onGeneratePages: onGenerateAppViewPages,
+      home: Scaffold(
+        //appBar: CustomAppBar(userEmail: context.select((value) => null), userPhotoUrl: userPhotoUrl),
+        body: FlowBuilder<AppStatus>(
+          state: context.select((AppBloc bloc) => bloc.state.status),
+          onGeneratePages: onGenerateAppViewPages,
+          observers: [
+            HeroController(),
+          ],
+        ),
+        bottomNavigationBar: const CustomBottomBar(),
       ),
     );
   }

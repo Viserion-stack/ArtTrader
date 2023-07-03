@@ -4,6 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+
 part 'app_event.dart';
 part 'app_state.dart';
 
@@ -16,6 +18,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             ? AppState.authenticated(authenticationRepository.currentUser)
             : const AppState.unauthenticated()) {
     on<_AppUserChanged>(_onUserChanged);
+    on<AppPageChanged>(_onAppPageChanged);
     on<AppLogoutRequested>(_onLogoutRequested);
 
     _userSubscription = _authenticationRepository.user.listen(
@@ -29,6 +32,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           ? AppState.authenticated(event.user)
           : const AppState.unauthenticated(),
     );
+  }
+
+  void _onAppPageChanged(AppPageChanged event, Emitter<AppState> emit) {
+    emit(AppState.changePage(event.status));
+    debugPrint('Change app page => App Status = ${event.status}');
   }
 
   void _onLogoutRequested(AppLogoutRequested event, Emitter<AppState> emit) {

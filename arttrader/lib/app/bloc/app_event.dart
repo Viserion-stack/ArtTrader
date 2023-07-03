@@ -12,3 +12,8 @@ final class _AppUserChanged extends AppEvent {
   final User user;
   const _AppUserChanged(this.user);
 }
+
+final class AppPageChanged extends AppEvent {
+  final AppStatus status;
+  const AppPageChanged(this.status);
+}

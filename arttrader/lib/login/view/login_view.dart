@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
           padding: const EdgeInsets.all(8),
-          child: BlocProvider(
+          child: BlocProvider<LoginCubit>(
             create: (_) => LoginCubit(context.read<AuthenticationRepository>()),
             child: const LoginForm(),
           )),

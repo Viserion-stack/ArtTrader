@@ -1,4 +1,6 @@
+import 'package:arttrader/domain/models/art/art.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 
 /// {@template get_arts_failure}
@@ -82,17 +84,18 @@ class ArtRepository {
     FirebaseFirestore? firebaseFirestore,
   }) : _firebaseFirestore = firebaseFirestore ?? FirebaseFirestore.instance;
 
-  TaskEither<GetArtsFailure, List<dynamic>> getCollection(
+  TaskEither<GetArtsFailure, List<Art>> getCollection(
       {required String collectionName}) {
-    return TaskEither<GetArtsFailure, List<dynamic>>(
+    return TaskEither<GetArtsFailure, List<Art>>(
       () async {
         try {
-          List<dynamic> collectionList = [];
+          List<Art> collectionList = [];
           final collection =
               await _firebaseFirestore.collection(collectionName).get();
 
           for (var element in collection.docs) {
-            collectionList.add(element.data());
+            debugPrint(element.id);
+            collectionList.add(Art.fromJson(element.data(), element.id));
           }
           return right(collectionList);
         } on FirebaseException catch (e) {
@@ -102,6 +105,24 @@ class ArtRepository {
         }
       },
     );
+  }
+
+  Future<List<Art>> getArts() async {
+    List<Art> artList = [];
+    try {
+      final collection = await _firebaseFirestore.collection('art').get();
+
+      for (var element in collection.docs) {
+        debugPrint(element.id);
+        artList.add(Art.fromJson(element.data(), element.id));
+      }
+      return artList;
+    } on FirebaseException catch (e) {
+      GetArtsFailure.fromCode(e.code);
+      return artList;
+    } catch (error) {
+      throw GetArtsFailure(error.toString());
+    }
   }
 
   // Future<List> getCollecion({required String collectionName}) async {
