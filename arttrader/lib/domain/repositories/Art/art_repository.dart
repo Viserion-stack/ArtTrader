@@ -113,13 +113,27 @@ class ArtRepository {
       final collection = await _firebaseFirestore.collection('art').get();
 
       for (var element in collection.docs) {
-        debugPrint(element.id);
+        //debugPrint(element.id);
         artList.add(Art.fromJson(element.data(), element.id));
       }
       return artList;
     } on FirebaseException catch (e) {
       GetArtsFailure.fromCode(e.code);
       return artList;
+    } catch (error) {
+      throw GetArtsFailure(error.toString());
+    }
+  }
+
+  Future<void> addArt(Art art) async {
+    try {
+      CollectionReference artCollection = _firebaseFirestore.collection('art');
+      await artCollection
+          .add(art.toJson())
+          .then((value) => debugPrint("Art Added"))
+          .catchError((error) => debugPrint("Failed to add art: $error"));
+    } on FirebaseException catch (e) {
+      GetArtsFailure.fromCode(e.code);
     } catch (error) {
       throw GetArtsFailure(error.toString());
     }

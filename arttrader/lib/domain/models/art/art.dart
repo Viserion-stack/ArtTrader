@@ -26,6 +26,11 @@ class Art extends Equatable {
     );
   }
 
+  
+  Map<String, dynamic> toJson() =>
+      {'imageUrl': imageUrl, 'name': name, 'price': price};
+  
+
   /// Empty art.
   static const emptyArt = Art(id: '', name: '', imageUrl: '', price: 0);
   @override

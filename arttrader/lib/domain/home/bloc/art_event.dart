@@ -23,5 +23,8 @@ final class GetSelectedArt extends ArtEvent {
 }
 
 final class AddItemToCollectionRequested extends ArtEvent {
-  const AddItemToCollectionRequested();
+  final Art artToAdd;
+  const AddItemToCollectionRequested({
+    required this.artToAdd,
+  });
 }

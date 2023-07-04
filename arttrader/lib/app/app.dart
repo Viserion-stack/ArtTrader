@@ -1,4 +1,5 @@
 import 'package:arttrader/app/bloc/app_bloc.dart';
+import 'package:arttrader/domain/add/bloc/camera_bloc.dart';
 import 'package:arttrader/domain/home/bloc/art_bloc.dart';
 import 'package:arttrader/domain/home/widgets/custom_bottom_bar.dart';
 import 'package:arttrader/domain/repositories/Art/art_repository.dart';
@@ -26,13 +27,20 @@ class App extends StatelessWidget {
       child: BlocProvider<AppBloc>(
         create: (BuildContext context) =>
             AppBloc(authenticationRepository: _authenticationRepository),
-        child: BlocProvider<ArtBloc>(
-          create: (BuildContext context) =>
-              ArtBloc(artRepository: _artRepository)
-                ..add(
-                  //const GetCollecionRequested('art'),
-                  const GetArtsRequested(),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<ArtBloc>(
+              create: (BuildContext context) =>
+                  ArtBloc(artRepository: _artRepository)
+                    ..add(
+                      const GetArtsRequested(),
+                    ),
+            ),
+            BlocProvider<CameraBloc>(create: (_) => CameraBloc()
+
+                //lazy: false,
                 ),
+          ],
           child: const AppView(),
         ),
       ),

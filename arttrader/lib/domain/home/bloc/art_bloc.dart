@@ -17,6 +17,7 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
     on<GetCollecionRequested>(_onGetDataCollection);
     on<GetArtsRequested>(_onGetArtDataCollection);
     on<GetSelectedArt>(_onGetSelectedArt);
+    on<AddItemToCollectionRequested>(_onAddItemToCollectionRequested);
   }
 
   void _onGetDataCollection(
@@ -59,5 +60,15 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
     final selectedArt = state.artCollection![artIndex];
     emit(state.copyWith(art: selectedArt));
     debugPrint(selectedArt.toString());
+  }
+
+  Future<void> _onAddItemToCollectionRequested(
+      AddItemToCollectionRequested event, Emitter<ArtState> emit) async {
+    try {
+      await _artRepository.addArt(event.artToAdd);
+      emit(state.copyWith(status: ArtStatus.succes));
+    } catch (e) {
+      emit(state.copyWith(status: ArtStatus.error));
+    }
   }
 }
