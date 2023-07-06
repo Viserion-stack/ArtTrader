@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../add/extension/xfile_extension.dart';
+
 class Animatedimage extends StatefulWidget {
   final String imageUrl;
   final int pageIndex;
@@ -23,6 +25,7 @@ class _AnimatedimageState extends State<Animatedimage>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
+  bool isimageError = false;
 
   @override
   void initState() {
@@ -44,6 +47,10 @@ class _AnimatedimageState extends State<Animatedimage>
 
     super.initState();
   }
+  void canceLisetner() {
+    // ignore: invalid_use_of_protected_member
+    _animationController.clearListeners();
+  }
 
   @override
   void dispose() {
@@ -56,16 +63,13 @@ class _AnimatedimageState extends State<Animatedimage>
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
         return GestureDetector(
-          onTap: () {
-            // Navigator.of(context).push(
-            //     MaterialPageRoute(builder: (context) => const SecondPage()));
-
-            debugPrint('tapped ${widget.imageUrl}');
-            debugPrint('tapped ${widget.pageIndex}');
+          onTap: () {     
             context.read<ArtBloc>().add(GetSelectedArt(widget.artId));
+            
             context
                 .read<AppBloc>()
                 .add(const AppPageChanged(AppStatus.details));
+
           },
           child: Hero(
             tag: widget.artId,
@@ -76,7 +80,12 @@ class _AnimatedimageState extends State<Animatedimage>
                   final percent = download.progress! * 100;
                   return Text('$percent% done loading');
                 }
+
                 return const Text('Loaded Url');
+              },
+              errorWidget: (context, url, error) {
+                canceLisetner();
+                return imageFromBase64String(url);
               },
               imageUrl: widget.imageUrl,
               //alignment: Alignment.center,

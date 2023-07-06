@@ -6,8 +6,6 @@ import 'dart:typed_data';
 import 'package:arttrader/domain/add/bloc/camera_bloc.dart';
 import 'package:arttrader/domain/add/extension/xfile_extension.dart';
 import 'package:arttrader/domain/add/widgets/art_camera.dart';
-import 'package:arttrader/domain/home/bloc/art_bloc.dart';
-import 'package:arttrader/domain/models/art/art.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
 
 import 'package:image_picker/image_picker.dart';
+
+import 'add_art_form.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -61,7 +61,6 @@ class _AddPageState extends State<AddPage> {
                   },
                   onError: (error) {
                     context.read<CameraBloc>().add(CameraError(error));
-                    //Navigator.of(context).pop();
                   },
                 ),
               ),
@@ -130,53 +129,11 @@ void showModalSheet(BuildContext context, CameraState state) async {
             borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
         isScrollControlled: true,
         builder: (context) {
-          Uint8List _bytesImage;
-          String? _imgString = state.image;
-          _bytesImage = const Base64Decoder().convert(_imgString!);
+          Uint8List bytesImage;
+          String? imgString = state.image;
+          bytesImage = const Base64Decoder().convert(imgString!);
 
-          return SingleChildScrollView(
-            child: Container(
-              //: 500,
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.memory(_bytesImage),
-                  TextField(
-                    onChanged: (name) {},
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Name',
-                      helperText: '',
-                    ),
-                  ),
-                  TextField(
-                    onChanged: (value) {},
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Price',
-                      helperText: '',
-                    ),
-                  ),
-                  CupertinoButton(
-                    color: Colors.amber,
-                    onPressed: () {
-                      const Art artToAdd = Art(
-                          id: '1234',
-                          name: 'test',
-                          imageUrl: 'testImageUrl',
-                          price: 123);
-                      context.read<ArtBloc>().add(
-                          const AddItemToCollectionRequested(
-                              artToAdd: artToAdd));
-                    },
-                    child: const Text('Add'),
-                  ),
-                ],
-              ),
-            ),
-          );
+          return AddArtSheetForm(imageString: bytesImage);
         }).whenComplete(() {
       context.read<CameraBloc>().add(const CloseModal());
     });

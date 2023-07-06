@@ -7,9 +7,16 @@ class SettingsPage extends StatelessWidget {
   static Page<void> page() => const MaterialPage<void>(child: SettingsPage());
   @override
   Widget build(BuildContext context) {
+    final previousStatus = context.read<AppBloc>().state.previousStatus;
     return Scaffold(
-      body:
-          Center(child: Text(context.read<AppBloc>().state.status.toString())),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(context.read<AppBloc>().state.status.toString()),
+          Text(previousStatus.toString()),
+        ],
+      )),
     );
   }
 }

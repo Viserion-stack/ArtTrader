@@ -4,6 +4,7 @@ import 'package:arttrader/domain/models/art/art.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../add/extension/xfile_extension.dart';
 import 'widgets/search_bar.dart';
 
 class SearchPage extends StatefulWidget {
@@ -78,7 +79,13 @@ class _SearchPageState extends State<SearchPage> {
                         ListTile(
                           leading: Hero(
                             tag: artList[index].id!,
-                            child: Image.network(artList[index].imageUrl!),
+                            child: Image.network(
+                              artList[index].imageUrl!,
+                              errorBuilder: (context, error, stackTrace) {
+                                return imageFromBase64String(
+                                    artList[index].imageUrl!);
+                              },
+                            ),
                           ),
                           title: Text(artList[index].name!),
                           subtitle: Text(

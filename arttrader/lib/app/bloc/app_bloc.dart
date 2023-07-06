@@ -19,6 +19,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
             : const AppState.unauthenticated()) {
     on<_AppUserChanged>(_onUserChanged);
     on<AppPageChanged>(_onAppPageChanged);
+    //on<UpdatePreviousPageStatus>(_onUpdatePreviousPageStatus);
     on<AppLogoutRequested>(_onLogoutRequested);
 
     _userSubscription = _authenticationRepository.user.listen(
@@ -35,10 +36,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   void _onAppPageChanged(AppPageChanged event, Emitter<AppState> emit) {
-    emit(AppState.changePage(event.status));
+
+
+    emit(AppState.changePage(event.status, state.status));
     debugPrint('Change app page => App Status = ${event.status}');
   }
-
+   
   void _onLogoutRequested(AppLogoutRequested event, Emitter<AppState> emit) {
     unawaited(_authenticationRepository.logOut());
   }

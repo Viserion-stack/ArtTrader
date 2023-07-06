@@ -28,8 +28,10 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     }
     setState(() {
       _selectedIndex = index;
-      context.read<AppBloc>().add(AppPageChanged(status));
+      
     });
+    context.read<AppBloc>().add(AppPageChanged(status));
+
   }
 
   @override

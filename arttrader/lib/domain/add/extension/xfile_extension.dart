@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
 
 extension XFileExtension on XFile {
   Future<String?> imageBase64() async {
@@ -12,4 +14,16 @@ extension XFileExtension on XFile {
       return null;
     }
   }
+}
+
+Image imageFromBase64String(String base64String) {
+  return Image.memory(base64Decode(base64String));
+}
+
+Uint8List dataFromBase64String(String base64String) {
+  return base64Decode(base64String);
+}
+
+String base64String(Uint8List data) {
+  return base64Encode(data);
 }

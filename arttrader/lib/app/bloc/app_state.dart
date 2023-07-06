@@ -13,17 +13,35 @@ enum AppStatus {
 
 final class AppState extends Equatable {
   final AppStatus status;
+  final AppStatus previousStatus;
   final User user;
   const AppState._({
     required this.status,
     this.user = User.empty,
+    required this.previousStatus,
   });
-
   const AppState.authenticated(User user)
-      : this._(status: AppStatus.authenticated, user: user);
-  const AppState.unauthenticated() : this._(status: AppStatus.unauthenticated);
+      : this._(
+          previousStatus: AppStatus.authenticated,
+          status: AppStatus.authenticated,
+          user: user,
+        );
 
-  const AppState.changePage(AppStatus status) : this._(status: status);
+  const AppState.unauthenticated()
+      : this._(
+          previousStatus: AppStatus.unauthenticated,
+          status: AppStatus.unauthenticated,
+        );
+
+  const AppState.changePage(AppStatus status, AppStatus previousStatus)
+      : this._(
+          previousStatus: previousStatus,
+          status: status,
+        );
+
   @override
-  List<Object> get props => [status, user];
+  List<Object?> get props => [status, user, previousStatus];
+
+  
+   
 }

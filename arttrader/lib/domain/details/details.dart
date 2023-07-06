@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../app/routes/widget/page_widget.dart';
+import '../add/extension/xfile_extension.dart';
 import '../home/bloc/art_bloc.dart';
 import '../models/art/art.dart';
 
@@ -15,7 +16,8 @@ class DetailsPage extends StatelessWidget {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            context.read<AppBloc>().add(const AppPageChanged(AppStatus.home));
+            final previousStatus = context.read<AppBloc>().state.previousStatus;
+            context.read<AppBloc>().add(AppPageChanged(previousStatus));
           },
         ),
       ),
@@ -28,7 +30,12 @@ class DetailsPage extends StatelessWidget {
               Text(context.read<AppBloc>().state.status.toString()),
               Hero(
                 tag: selectedArt.id!,
-                child: Image.network(selectedArt.imageUrl!),
+                child: Image.network(
+                  selectedArt.imageUrl!,
+                  errorBuilder: (context, error, stackTrace) {
+                    return imageFromBase64String(selectedArt.imageUrl!);
+                  },
+                ),
               ),
             ],
           ));
