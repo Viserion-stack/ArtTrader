@@ -1,4 +1,5 @@
 import 'package:arttrader/domain/models/art/art.dart';
+import 'package:arttrader/domain/models/art/bid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
@@ -132,6 +133,43 @@ class ArtRepository {
           .add(art.toJson())
           .then((value) => debugPrint("Art Added"))
           .catchError((error) => debugPrint("Failed to add art: $error"));
+    } on FirebaseException catch (e) {
+      GetArtsFailure.fromCode(e.code);
+    } catch (error) {
+      throw GetArtsFailure(error.toString());
+    }
+  }
+
+  Future<void> placeBid(Art art, Bid bid) async {
+    try {
+      CollectionReference artCollection = _firebaseFirestore.collection('art');
+      // await artCollection
+      //     .doc(art.id)
+      //     .collection('biddingHistory')
+      //     .add({
+      //       'bidderName': bid.bidderName,
+      //       'timestamp': bid.timeStamp,
+      //       'bidAmount': bid.bidAmount,
+      //     })
+      //     .then((value) => debugPrint('Bid'))
+      //     .catchError((error) => debugPrint("Failed to place bid: $error"));
+      final DocumentReference documentRef = artCollection.doc(art.id);
+      await FirebaseFirestore.instance.runTransaction((transaction) async {
+        final DocumentSnapshot snapshot = await transaction.get(documentRef);
+
+        if (snapshot.exists) {
+          final List<dynamic> biddingHistory =
+              (snapshot.data() as Map<String, dynamic>)['biddingHistory'] ?? [];
+
+          biddingHistory.add({
+            'bidderName': bid.bidderName,
+            'timestamp': Timestamp.fromDate(bid.timeStamp!),
+            'bidAmount': bid.bidAmount,
+          });
+
+          transaction.update(documentRef, {'biddingHistory': biddingHistory});
+        }
+      });
     } on FirebaseException catch (e) {
       GetArtsFailure.fromCode(e.code);
     } catch (error) {

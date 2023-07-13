@@ -28,3 +28,12 @@ final class AddItemToCollectionRequested extends ArtEvent {
     required this.artToAdd,
   });
 }
+
+final class PlaceBidRequested extends ArtEvent {
+  final Art art;
+  final Bid bid;
+  const PlaceBidRequested({
+    required this.art,
+    required this.bid,
+  });
+}

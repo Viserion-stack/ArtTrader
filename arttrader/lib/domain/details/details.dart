@@ -1,6 +1,9 @@
 import 'package:arttrader/app/bloc/app_bloc.dart';
+import 'package:arttrader/domain/models/art/bid.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../app/routes/widget/page_widget.dart';
 import '../add/extension/xfile_extension.dart';
@@ -37,6 +40,40 @@ class DetailsPage extends StatelessWidget {
                   },
                 ),
               ),
+              Text('current Bid: ${state.art!.price}'),
+              CupertinoButton.filled(
+                  child: Text('Place a bid by 1'),
+                  onPressed: () {
+                    final bid = Bid(
+                        bidderName: 'TestUser',
+                        timeStamp: DateTime.now(),
+                        bidAmount: (state.art!.price! + 1));
+
+                    context
+                        .read<ArtBloc>()
+                        .add(PlaceBidRequested(art: state.art!, bid: bid));
+                  }),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: selectedArt.biddigHistory!.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: Text(
+                        selectedArt.biddigHistory![index].bidderName!,
+                      ),
+                      title: Text(selectedArt.biddigHistory![index].bidAmount!
+                          .toString()),
+                      trailing: Text(DateFormat('yyyy-MM-dd HH:mm:ss')
+                          .format(selectedArt.biddigHistory![index].timeStamp!)
+                          .toString()),
+                    );
+                    //   trailing: Text(selectedArt
+                    //       .biddigHistory![index].timeStamp!
+                    //       .toString()),
+                    // );
+                  },
+                ),
+              )
             ],
           ));
         },

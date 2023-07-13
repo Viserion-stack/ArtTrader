@@ -1,3 +1,4 @@
+import 'package:arttrader/domain/models/art/bid.dart';
 import 'package:arttrader/domain/repositories/Art/art_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,6 +19,7 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
     on<GetArtsRequested>(_onGetArtDataCollection);
     on<GetSelectedArt>(_onGetSelectedArt);
     on<AddItemToCollectionRequested>(_onAddItemToCollectionRequested);
+    on<PlaceBidRequested>(_onPlaceBidRequested);
   }
 
   void _onGetDataCollection(
@@ -66,6 +68,15 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
       AddItemToCollectionRequested event, Emitter<ArtState> emit) async {
     try {
       await _artRepository.addArt(event.artToAdd);
+      emit(state.copyWith(status: ArtStatus.succes));
+    } catch (e) {
+      emit(state.copyWith(status: ArtStatus.error));
+    }
+  }
+  Future<void> _onPlaceBidRequested(
+      PlaceBidRequested event, Emitter<ArtState> emit) async {
+    try {
+      await _artRepository.placeBid(event.art, event.bid);
       emit(state.copyWith(status: ArtStatus.succes));
     } catch (e) {
       emit(state.copyWith(status: ArtStatus.error));

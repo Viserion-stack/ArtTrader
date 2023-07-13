@@ -18,6 +18,7 @@ class HomePage extends StatelessWidget {
       // ),
       body: BlocBuilder<ArtBloc, ArtState>(
         builder: (context, state) {
+         
           return state.status == ArtStatus.loading
               ? const Center(child: CircularProgressIndicator.adaptive())
               : Align(
