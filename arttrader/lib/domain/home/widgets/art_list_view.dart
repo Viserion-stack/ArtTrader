@@ -19,7 +19,8 @@ class ArtList extends StatelessWidget {
       itemCount: artList.length,
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
         return Container(
-          color: Colors.amber,
+//TODO app Insets
+          color: const Color(0xFF303030),
           child: Center(
             child: Animatedimage(
               imageUrl: artList[itemIndex].imageUrl!,

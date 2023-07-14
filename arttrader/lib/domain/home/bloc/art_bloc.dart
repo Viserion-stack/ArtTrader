@@ -20,6 +20,7 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
     on<GetSelectedArt>(_onGetSelectedArt);
     on<AddItemToCollectionRequested>(_onAddItemToCollectionRequested);
     on<PlaceBidRequested>(_onPlaceBidRequested);
+    on<DeleteArtRequested>(_onDeleteArtRequested);
   }
 
   void _onGetDataCollection(
@@ -34,7 +35,6 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
       result.match(
         (l) => state.copyWith(status: ArtStatus.error),
         (collectionArt) {
-          //print(collectionArt);
           return state.copyWith(
             status: ArtStatus.succes,
             artCollection: collectionArt,
@@ -77,6 +77,18 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
       PlaceBidRequested event, Emitter<ArtState> emit) async {
     try {
       await _artRepository.placeBid(event.art, event.bid);
+      emit(state.copyWith(
+        status: ArtStatus.succes,
+      ));
+    } catch (e) {
+      emit(state.copyWith(status: ArtStatus.error));
+    }
+  }
+
+  Future<void> _onDeleteArtRequested(
+      DeleteArtRequested event, Emitter<ArtState> emit) async {
+    try {
+      await _artRepository.deleteArt(event.art);
       emit(state.copyWith(status: ArtStatus.succes));
     } catch (e) {
       emit(state.copyWith(status: ArtStatus.error));

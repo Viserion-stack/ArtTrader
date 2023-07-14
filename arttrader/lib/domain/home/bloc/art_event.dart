@@ -37,3 +37,9 @@ final class PlaceBidRequested extends ArtEvent {
     required this.bid,
   });
 }
+final class DeleteArtRequested extends ArtEvent {
+  final Art art;
+  const DeleteArtRequested({
+    required this.art,
+  });
+}

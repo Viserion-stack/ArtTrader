@@ -140,19 +140,26 @@ class ArtRepository {
     }
   }
 
+  Future<void> deleteArt(Art art) async {
+    try {
+      final DocumentReference documentRef =
+          FirebaseFirestore.instance.collection('artItems').doc(art.id);
+
+      await documentRef
+          .delete()
+          .then((value) => debugPrint('Art item deleted succesfully'));
+    } catch (e) {
+      if (e is FirebaseException) {
+        print('Firebase Exception: ${e.message}');
+      } else {
+        print('Error occurred while deleting the art item: $e');
+      }
+    }
+  }
+
   Future<void> placeBid(Art art, Bid bid) async {
     try {
       CollectionReference artCollection = _firebaseFirestore.collection('art');
-      // await artCollection
-      //     .doc(art.id)
-      //     .collection('biddingHistory')
-      //     .add({
-      //       'bidderName': bid.bidderName,
-      //       'timestamp': bid.timeStamp,
-      //       'bidAmount': bid.bidAmount,
-      //     })
-      //     .then((value) => debugPrint('Bid'))
-      //     .catchError((error) => debugPrint("Failed to place bid: $error"));
       final DocumentReference documentRef = artCollection.doc(art.id);
       await FirebaseFirestore.instance.runTransaction((transaction) async {
         final DocumentSnapshot snapshot = await transaction.get(documentRef);
@@ -167,7 +174,8 @@ class ArtRepository {
             'bidAmount': bid.bidAmount,
           });
 
-          transaction.update(documentRef, {'biddingHistory': biddingHistory});
+          transaction.update(documentRef,
+              {'biddingHistory': biddingHistory, 'price': bid.bidAmount});
         }
       });
     } on FirebaseException catch (e) {

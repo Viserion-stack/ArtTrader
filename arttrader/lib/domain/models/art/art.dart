@@ -25,8 +25,6 @@ class Art extends Equatable {
   });
 
   factory Art.fromJson(Map<String, dynamic> json, String id) {
-    print("///////");
-
     List<Bid> biddingHistory = [];
     final bids = json['biddingHistory'];
     if (bids != null) {

@@ -44,6 +44,7 @@ class DetailsPage extends StatelessWidget {
               CupertinoButton.filled(
                   child: Text('Place a bid by 1'),
                   onPressed: () {
+                    //TODO udpate current price after bidding.
                     final bid = Bid(
                         bidderName: 'TestUser',
                         timeStamp: DateTime.now(),
