@@ -4,10 +4,10 @@ sealed class ArtEvent {
   const ArtEvent();
 }
 
-final class GetCollecionRequested extends ArtEvent {
-  final String collectionName;
-  const GetCollecionRequested(this.collectionName);
-}
+// final class GetCollecionRequested extends ArtEvent {
+//   final String collectionName;
+//   const GetCollecionRequested(this.collectionName);
+// }
 
 final class GetArtsRequested extends ArtEvent {
   const GetArtsRequested();
@@ -37,9 +37,18 @@ final class PlaceBidRequested extends ArtEvent {
     required this.bid,
   });
 }
+
 final class DeleteArtRequested extends ArtEvent {
   final Art art;
   const DeleteArtRequested({
     required this.art,
   });
+}
+
+final class GetMyBidList extends ArtEvent {
+  const GetMyBidList();
+}
+
+final class GetMyArtList extends ArtEvent {
+  const GetMyArtList();
 }

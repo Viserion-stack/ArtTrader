@@ -14,30 +14,33 @@ class ArtList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider.builder(
-      carouselController: _carouselController,
-      itemCount: artList.length,
-      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) {
-        return Container(
+    return artList.isEmpty
+        ? const CircularProgressIndicator.adaptive(semanticsValue: 'asdasds')
+        : CarouselSlider.builder(
+            carouselController: _carouselController,
+            itemCount: artList.length,
+            itemBuilder:
+                (BuildContext context, int itemIndex, int pageViewIndex) {
+              return Container(
 //TODO app Insets
-          color: const Color(0xFF303030),
-          child: Center(
-            child: Animatedimage(
-              imageUrl: artList[itemIndex].imageUrl!,
-              pageIndex: pageViewIndex,
-              artId: artList[itemIndex].id!,
+                color: const Color(0xFF303030),
+                child: Center(
+                  child: Animatedimage(
+                    imageUrl: artList[itemIndex].imageUrl!,
+                    pageIndex: pageViewIndex,
+                    artId: artList[itemIndex].id!,
+                  ),
+                ),
+              );
+            },
+            options: CarouselOptions(
+              initialPage: 0,
+              autoPlayInterval: const Duration(seconds: 10),
+              autoPlay: true,
+              scrollDirection: Axis.vertical,
+              enlargeCenterPage: false,
+              viewportFraction: 1,
             ),
-          ),
-        );
-      },
-      options: CarouselOptions(
-        initialPage: 0,
-        autoPlayInterval: const Duration(seconds: 10),
-        autoPlay: true,
-        scrollDirection: Axis.vertical,
-        enlargeCenterPage: false,
-        viewportFraction: 1,
-      ),
-    );
+          );
   }
 }

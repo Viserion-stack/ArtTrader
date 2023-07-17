@@ -32,15 +32,16 @@ class App extends StatelessWidget {
           providers: [
             BlocProvider<ArtBloc>(
               create: (BuildContext context) =>
-                  ArtBloc(artRepository: _artRepository)
+                  ArtBloc(
+                  artRepository: _artRepository,
+                  authenticationRepository: _authenticationRepository)
                     ..add(
                       const GetArtsRequested(),
                     ),
             ),
             BlocProvider<AddArtCubit>(
-                create: (BuildContext context) => AddArtCubit(_artRepository)
-                   
-            ),
+                create: (BuildContext context) =>
+                    AddArtCubit(_artRepository, _authenticationRepository)),
             BlocProvider<CameraBloc>(create: (_) => CameraBloc()
 
                 //lazy: false,

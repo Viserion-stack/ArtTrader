@@ -6,42 +6,62 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/art/art.dart';
+import '../../repositories/Authentication/authentication.dart';
 
 part 'art_event.dart';
 part 'art_state.dart';
 
 class ArtBloc extends Bloc<ArtEvent, ArtState> {
   final ArtRepository _artRepository;
-  ArtBloc({required ArtRepository artRepository})
+  final AuthenticationRepository? _authenticationRepository;
+
+  ArtBloc(
+      {required ArtRepository artRepository,
+      AuthenticationRepository? authenticationRepository})
       : _artRepository = artRepository,
+        _authenticationRepository = authenticationRepository,
         super(const ArtState(status: ArtStatus.initial, artCollection: [])) {
-    on<GetCollecionRequested>(_onGetDataCollection);
+    //on<GetCollecionRequested>(_onGetDataCollection);
     on<GetArtsRequested>(_onGetArtDataCollection);
+    on<GetMyBidList>(_onGetMyBidList);
+    on<GetMyArtList>(_onGetMyArtList);
     on<GetSelectedArt>(_onGetSelectedArt);
     on<AddItemToCollectionRequested>(_onAddItemToCollectionRequested);
     on<PlaceBidRequested>(_onPlaceBidRequested);
     on<DeleteArtRequested>(_onDeleteArtRequested);
   }
-
-  void _onGetDataCollection(
-      GetCollecionRequested event, Emitter<ArtState> emit) async {
+  Future<void> _onGetMyBidList(
+      GetMyBidList event, Emitter<ArtState> emit) async {
     emit(state.copyWith(status: ArtStatus.loading));
-    await Future.delayed(const Duration(seconds: 2), () {});
-    final result = await _artRepository
-        .getCollection(collectionName: event.collectionName)
-        .run();
 
+    final username = _authenticationRepository!.currentUser.email;
+    List<Art> filteredArts = [];
+    for (Art art in state.artCollection!) {
+      List<Bid> biddingHistory = art.biddingHistory!;
+
+      for (Bid bid in biddingHistory) {
+        if (bid.bidderName == username) {
+          filteredArts.add(art);
+          break;
+        }
+      }
+    }
     emit(
-      result.match(
-        (l) => state.copyWith(status: ArtStatus.error),
-        (collectionArt) {
-          return state.copyWith(
-            status: ArtStatus.succes,
-            artCollection: collectionArt,
-          );
-        },
-      ),
-    );
+        state.copyWith(status: ArtStatus.succes, bidsCollection: filteredArts));
+  }
+
+  Future<void> _onGetMyArtList(
+      GetMyArtList event, Emitter<ArtState> emit) async {
+    emit(state.copyWith(status: ArtStatus.loading));
+    try {
+      final username = _authenticationRepository!.currentUser;
+      List<Art> myArtlist = state.artCollection!
+          .where((element) => element.addedBy == username.email)
+          .toList();
+      emit(state.copyWith(status: ArtStatus.succes, myCollection: myArtlist));
+    } catch (e) {
+      emit(state.copyWith(status: ArtStatus.error));
+    }
   }
 
   void _onGetArtDataCollection(
@@ -52,6 +72,7 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
       final result = await _artRepository.getArts();
       emit(state.copyWith(status: ArtStatus.succes, artCollection: result));
     } catch (e) {
+      debugPrint(e.toString());
       emit(state.copyWith(status: ArtStatus.error));
     }
   }
@@ -61,7 +82,7 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
         state.artCollection!.indexWhere((element) => element.id == event.artId);
     final selectedArt = state.artCollection![artIndex];
     emit(state.copyWith(art: selectedArt));
-    debugPrint(selectedArt.toString());
+    //debugPrint(selectedArt.toString());
   }
 
   Future<void> _onAddItemToCollectionRequested(
@@ -73,6 +94,7 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
       emit(state.copyWith(status: ArtStatus.error));
     }
   }
+
   Future<void> _onPlaceBidRequested(
       PlaceBidRequested event, Emitter<ArtState> emit) async {
     try {

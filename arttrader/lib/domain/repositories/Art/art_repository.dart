@@ -96,7 +96,7 @@ class ArtRepository {
 
           for (var element in collection.docs) {
             debugPrint(element.id);
-            collectionList.add(Art.fromJson(element.data(), element.id));
+            collectionList.add(Art.fromJson(element.data()));
           }
           return right(collectionList);
         } on FirebaseException catch (e) {
@@ -115,27 +115,32 @@ class ArtRepository {
 
       for (var element in collection.docs) {
         //debugPrint(element.id);
-        artList.add(Art.fromJson(element.data(), element.id));
+        artList.add(Art.fromJson(element.data()));
       }
       return artList;
     } on FirebaseException catch (e) {
+      debugPrint(e.toString());
       GetArtsFailure.fromCode(e.code);
       return artList;
     } catch (error) {
+      debugPrint(error.toString());
       throw GetArtsFailure(error.toString());
     }
   }
 
   Future<void> addArt(Art art) async {
+
     try {
       CollectionReference artCollection = _firebaseFirestore.collection('art');
-      await artCollection
-          .add(art.toJson())
-          .then((value) => debugPrint("Art Added"))
-          .catchError((error) => debugPrint("Failed to add art: $error"));
+      DocumentReference documentRef = await artCollection.add(art.toJson());
+      String artId = documentRef.id;
+      await documentRef.update({'id': artId});
+      debugPrint('Art added successfully with ID: $artId');
     } on FirebaseException catch (e) {
+      debugPrint(e.toString());
       GetArtsFailure.fromCode(e.code);
     } catch (error) {
+      debugPrint(error.toString());
       throw GetArtsFailure(error.toString());
     }
   }
@@ -150,9 +155,9 @@ class ArtRepository {
           .then((value) => debugPrint('Art item deleted succesfully'));
     } catch (e) {
       if (e is FirebaseException) {
-        print('Firebase Exception: ${e.message}');
+        debugPrint('Firebase Exception: ${e.message}');
       } else {
-        print('Error occurred while deleting the art item: $e');
+        debugPrint('Error occurred while deleting the art item: $e');
       }
     }
   }

@@ -110,7 +110,8 @@ class _AddArtButton extends StatelessWidget {
                 if (state.isValid) {
                   final imageUrl = context.read<CameraBloc>().state.image;
                   context.read<AddArtCubit>().addArt(imageUrl!);
-                }
+                }  
+                
               },
               child: const Text('Add'),
             );

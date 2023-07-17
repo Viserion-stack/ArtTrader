@@ -17,6 +17,9 @@ final class AppPageChanged extends AppEvent {
   final AppStatus status;
   const AppPageChanged(this.status);
 }
+final class GetCurrentUser extends AppEvent {
+  const GetCurrentUser();
+}
 
 final class UpdatePreviousPageStatus extends AppEvent {
   final AppStatus currentStatus;

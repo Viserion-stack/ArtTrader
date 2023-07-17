@@ -27,24 +27,27 @@ class DetailsPage extends StatelessWidget {
       body: BlocBuilder<ArtBloc, ArtState>(
         builder: (context, state) {
           Art selectedArt = state.art!;
+          
           return Center(
               child: Column(
             children: [
               Text(context.read<AppBloc>().state.status.toString()),
-              Hero(
-                tag: selectedArt.id!,
-                child: Image.network(
-                  selectedArt.imageUrl!,
-                  errorBuilder: (context, error, stackTrace) {
-                    return imageFromBase64String(selectedArt.imageUrl!);
-                  },
+              Expanded(
+                flex: 2,
+                child: Hero(
+                  tag: selectedArt.id!,
+                  child: Image.network(
+                    selectedArt.imageUrl!,
+                    errorBuilder: (context, error, stackTrace) {
+                      return imageFromBase64String(selectedArt.imageUrl!);
+                    },
+                  ),
                 ),
               ),
               Text('current Bid: ${state.art!.price}'),
               CupertinoButton.filled(
-                  child: Text('Place a bid by 1'),
+                  child: const Text('Place a bid by 1'),
                   onPressed: () {
-                    //TODO udpate current price after bidding.
                     final bid = Bid(
                         bidderName: 'TestUser',
                         timeStamp: DateTime.now(),
@@ -56,16 +59,16 @@ class DetailsPage extends StatelessWidget {
                   }),
               Expanded(
                 child: ListView.builder(
-                  itemCount: selectedArt.biddigHistory!.length,
+                  itemCount: selectedArt.biddingHistory!.length,
                   itemBuilder: (context, index) {
                     return ListTile(
                       leading: Text(
-                        selectedArt.biddigHistory![index].bidderName!,
+                        selectedArt.biddingHistory![index].bidderName!,
                       ),
-                      title: Text(selectedArt.biddigHistory![index].bidAmount!
+                      title: Text(selectedArt.biddingHistory![index].bidAmount!
                           .toString()),
                       trailing: Text(DateFormat('yyyy-MM-dd HH:mm:ss')
-                          .format(selectedArt.biddigHistory![index].timeStamp!)
+                          .format(selectedArt.biddingHistory![index].timeStamp!)
                           .toString()),
                     );
                     //   trailing: Text(selectedArt

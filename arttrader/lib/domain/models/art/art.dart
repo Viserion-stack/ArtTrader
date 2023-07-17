@@ -10,66 +10,104 @@ class Art extends Equatable {
   /// The current art bidding history
   /// The current art price
   final String? id;
+  final String? addedBy;
   final String? name;
   final String? imageUrl;
-  final List<Bid>? biddigHistory;
+  final List<Bid>? biddingHistory;
   final int? price;
 
   /// {@macro art}
   const Art({
     required this.id,
+    required this.addedBy,
     required this.name,
     required this.imageUrl,
-    required this.biddigHistory,
+    required this.biddingHistory,
     required this.price,
   });
+  factory Art.fromJson(Map<String, dynamic> json) {
+    final List<Bid> biddingHistory =
+        _parseBiddingHistory(json['biddingHistory']);
 
-  factory Art.fromJson(Map<String, dynamic> json, String id) {
-    List<Bid> biddingHistory = [];
-    final bids = json['biddingHistory'];
-    if (bids != null) {
-      bids.forEach((data) => biddingHistory.add(Bid(
-            bidderName: data['bidderName'],
-            timeStamp: (data['timestamp'] as Timestamp).toDate(),
-            bidAmount: data['bidAmount'],
-          )));
-    }
     return Art(
-      id: id,
+      id: json['id'],
+      addedBy: json['addedBy'],
       name: json['name'],
       imageUrl: json['imageUrl'],
-      biddigHistory: biddingHistory,
+      biddingHistory: biddingHistory,
       price: json['price'],
     );
   }
 
-  List<Bid> bidsHistory(Map<String, dynamic> json) {
-    List<Bid> biddingHistory = [];
-    biddingHistory = json['biddingHistory'].map((data) {
-      biddingHistory.add(Bid(
-        bidderName: data['bidderName'],
-        timeStamp: (data['timestamp'] as Timestamp).toDate(),
-        bidAmount: data['bidAmount'].toDouble(),
-      ));
-      //   return Bid(
-      //     bidderName: data['bidderName'],
-      //     timeStamp: (data['timestamp'] as Timestamp).toDate(),
-      //     bidAmount: data['bidAmount'].toDouble(),
-      //   );
-      // }).toList();
-    });
-    print(biddingHistory.length);
+static List<Bid> _parseBiddingHistory(dynamic jsonBids) {
+    final List<Bid> biddingHistory = [];
+
+    if (jsonBids is Iterable) {
+      for (final dynamic bidData in jsonBids) {
+        final String bidderName = bidData['bidderName'];
+        final DateTime timeStamp = (bidData['timestamp'] as Timestamp).toDate();
+        final dynamic bidAmount = bidData['bidAmount'];
+
+        final Bid bid = Bid(
+          bidderName: bidderName,
+          timeStamp: timeStamp,
+          bidAmount: bidAmount,
+        );
+        biddingHistory.add(bid);
+      }
+    }
+
     return biddingHistory;
   }
 
-  Map<String, dynamic> toJson() =>
-      {'imageUrl': imageUrl, 'name': name, 'price': price};
+  // factory Art.fromJson(Map<String, dynamic> json) {
+  //   List<Bid> biddingHistory = [];
+  //   final bids = json['biddingHistory'];
+  //   if (bids != null) {
+  //     bids.forEach((String key, dynamic data) {
+  //       print(data['bidderName']);
+  //       biddingHistory.add(Bid(
+  //         bidderName: data['bidderName'],
+  //         timeStamp: (data['timestamp'] as Timestamp).toDate(),
+  //         bidAmount: data['bidAmount'],
+  //       ));
+  //     });
+  //   }
+  //   return Art(
+  //     id: json['id'],
+  //     addedBy: json['addedBy'],
+  //     name: json['name'],
+  //     imageUrl: json['imageUrl'],
+  //     biddigHistory: biddingHistory,
+  //     price: json['price'],
+  //   );
+  // }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'addedBy': addedBy,
+        'imageUrl':
+            'https://firebasestorage.googleapis.com/v0/b/arttrader-d69bb.appspot.com/o/sjcolors.jpg?alt=media&token=9f0d1339-075d-44fa-8c72-9d653d3fbcdb', //imageUrl,
+        'name': name,
+        'biddingHistory': {
+          'bidAmount': price,
+          'bidderName': '',
+          'timestamp': DateTime.now(),
+        },
+        'price': price
+      };
 
   /// Empty art.
-  static const emptyArt =
-      Art(id: '', name: '', imageUrl: '', biddigHistory: [], price: 0);
+  static const emptyArt = Art(
+      id: '',
+      addedBy: '',
+      imageUrl: '',
+      name: '',
+      biddingHistory: [],
+      price: 0);
   //Art(id: '', name: '', imageUrl: '', price: 0);
   @override
-  List<Object?> get props => [id, name, imageUrl, biddigHistory, price];
+  List<Object?> get props =>
+      [id, addedBy, imageUrl, name, biddingHistory, price];
   //List<Object?> get props => [id, name, imageUrl, price];
 }

@@ -1,4 +1,5 @@
 import 'package:arttrader/app/bloc/app_bloc.dart';
+import 'package:arttrader/domain/home/bloc/art_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,16 +23,16 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       case 2:
         status = AppStatus.add;
       case 3:
+        context.read<ArtBloc>().add(const GetMyArtList());
+        context.read<ArtBloc>().add(const GetMyBidList());
         status = AppStatus.bids;
       case 4:
         status = AppStatus.settings;
     }
     setState(() {
       _selectedIndex = index;
-      
     });
     context.read<AppBloc>().add(AppPageChanged(status));
-
   }
 
   @override

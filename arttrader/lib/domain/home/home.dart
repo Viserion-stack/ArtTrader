@@ -1,3 +1,4 @@
+import 'package:arttrader/app/bloc/app_bloc.dart';
 import 'package:arttrader/domain/home/bloc/art_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,6 @@ class HomePage extends StatelessWidget {
       // ),
       body: BlocBuilder<ArtBloc, ArtState>(
         builder: (context, state) {
-         
           return state.status == ArtStatus.loading
               ? const Center(child: CircularProgressIndicator.adaptive())
               : Align(
@@ -27,27 +27,8 @@ class HomePage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Expanded(
-                        child: ArtList(
-                            artList:
-                                context.read<ArtBloc>().state.artCollection!),
+                        child: ArtList(artList: state.artCollection!),
                       ),
-                      // BlocBuilder<ArtBloc, ArtState>(
-                      //   builder: (context, state) {
-                      //     return state.status == ArtStatus.loading
-                      //         ? const CircularProgressIndicator.adaptive()
-                      //         : FloatingActionButton.large(
-                      //             onPressed: () {
-                      //               // print(state.artCollection!.length);
-                      //               context.read<ArtBloc>().add(
-                      //                   const GetCollecionRequested('art'));
-                      //             },
-                      //             child: const Text(
-                      //               'Get cllection',
-                      //               textAlign: TextAlign.center,
-                      //             ),
-                      //           );
-                      //   },
-                      // ),
                     ],
                   ),
                 );

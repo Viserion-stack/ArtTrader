@@ -21,6 +21,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppPageChanged>(_onAppPageChanged);
     //on<UpdatePreviousPageStatus>(_onUpdatePreviousPageStatus);
     on<AppLogoutRequested>(_onLogoutRequested);
+    on<GetCurrentUser>(_onGetCurrentUser);
 
     _userSubscription = _authenticationRepository.user.listen(
       (user) => add(_AppUserChanged(user)),
@@ -36,12 +37,19 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   void _onAppPageChanged(AppPageChanged event, Emitter<AppState> emit) {
-
-
     emit(AppState.changePage(event.status, state.status));
     debugPrint('Change app page => App Status = ${event.status}');
   }
-   
+
+  void _onGetCurrentUser(GetCurrentUser event, Emitter<AppState> emit) {
+    final user = _authenticationRepository.currentUser;
+    emit(AppState._(
+        status: state.status,
+        previousStatus: state.previousStatus,
+        user: user));
+    //return _authenticationRepository.currentUser.id;
+  }
+
   void _onLogoutRequested(AppLogoutRequested event, Emitter<AppState> emit) {
     unawaited(_authenticationRepository.logOut());
   }
