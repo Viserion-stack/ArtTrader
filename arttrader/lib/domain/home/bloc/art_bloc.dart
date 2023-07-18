@@ -29,7 +29,13 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
     on<AddItemToCollectionRequested>(_onAddItemToCollectionRequested);
     on<PlaceBidRequested>(_onPlaceBidRequested);
     on<DeleteArtRequested>(_onDeleteArtRequested);
+    on<SetListIndex>(_onSetListIndex);
   }
+
+  void _onSetListIndex(SetListIndex event, Emitter<ArtState> emit) {
+    emit(state.copyWith(lastListIndex: event.index));
+  }
+
   Future<void> _onGetMyBidList(
       GetMyBidList event, Emitter<ArtState> emit) async {
     emit(state.copyWith(status: ArtStatus.loading));

@@ -1,4 +1,3 @@
-import 'package:arttrader/app/bloc/app_bloc.dart';
 import 'package:arttrader/domain/home/bloc/art_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,4 +1,3 @@
-import 'package:arttrader/app/bloc/app_bloc.dart';
 import 'package:arttrader/domain/home/bloc/art_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +19,10 @@ class HomePage extends StatelessWidget {
       body: BlocBuilder<ArtBloc, ArtState>(
         builder: (context, state) {
           return state.status == ArtStatus.loading
-              ? const Center(child: CircularProgressIndicator.adaptive())
+              ? Container(
+                  color: const Color(0xFF303030),
+                  child:
+                      const Center(child: CircularProgressIndicator.adaptive()))
               : Align(
                   alignment: const Alignment(0, -1 / 3),
                   child: Column(

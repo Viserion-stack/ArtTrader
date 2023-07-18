@@ -52,3 +52,8 @@ final class GetMyBidList extends ArtEvent {
 final class GetMyArtList extends ArtEvent {
   const GetMyArtList();
 }
+
+final class SetListIndex extends ArtEvent {
+  final int index;
+  const SetListIndex(this.index);
+}

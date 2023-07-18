@@ -17,6 +17,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     AppStatus status = AppStatus.authenticated;
     switch (index) {
       case 0:
+        context.read<ArtBloc>().add(const GetArtsRequested());
         status = AppStatus.home;
       case 1:
         status = AppStatus.search;

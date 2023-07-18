@@ -1,6 +1,8 @@
+import 'package:arttrader/domain/home/bloc/art_bloc.dart';
 import 'package:arttrader/domain/models/art/art.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'animated_photo.dart';
 
@@ -22,7 +24,6 @@ class ArtList extends StatelessWidget {
             itemBuilder:
                 (BuildContext context, int itemIndex, int pageViewIndex) {
               return Container(
-//TODO app Insets
                 color: const Color(0xFF303030),
                 child: Center(
                   child: Animatedimage(
@@ -34,7 +35,10 @@ class ArtList extends StatelessWidget {
               );
             },
             options: CarouselOptions(
-              initialPage: 0,
+              onPageChanged: (index, reason) {
+                context.read<ArtBloc>().add(SetListIndex(index));
+              },
+              initialPage: context.read<ArtBloc>().state.lastListIndex,
               autoPlayInterval: const Duration(seconds: 10),
               autoPlay: true,
               scrollDirection: Axis.vertical,

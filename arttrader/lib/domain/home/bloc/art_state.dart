@@ -15,6 +15,7 @@ final class ArtState extends Equatable {
   final List<Art>? myCollection;
   final List<Art>? bidsCollection;
   final Art? art;
+  final int lastListIndex;
   const ArtState({
     required this.status,
     required this.artCollection,
@@ -23,6 +24,7 @@ final class ArtState extends Equatable {
     this.collection,
     this.authenticationRepository,
     this.art,
+    this.lastListIndex = 0,
   });
 
   //const ArtState.initial() : this._(status: ArtStatus.loading);
@@ -34,7 +36,8 @@ final class ArtState extends Equatable {
         myCollection,
         bidsCollection,
         authenticationRepository,
-        art
+        art,
+        lastListIndex,
       ];
 
   ArtState copyWith({
@@ -43,8 +46,8 @@ final class ArtState extends Equatable {
     List<Art>? artCollection,
     List<Art>? myCollection,
     List<Art>? bidsCollection,
-
     Art? art,
+    int? lastListIndex,
   }) {
     return ArtState(
       status: status ?? this.status,
@@ -53,6 +56,7 @@ final class ArtState extends Equatable {
       myCollection: myCollection ?? this.myCollection,
       bidsCollection: bidsCollection ?? this.bidsCollection,
       art: art ?? this.art,
+      lastListIndex: lastListIndex ?? this.lastListIndex,
     );
   }
 

@@ -47,6 +47,7 @@ class _AnimatedimageState extends State<Animatedimage>
 
     super.initState();
   }
+
   void canceLisetner() {
     // ignore: invalid_use_of_protected_member
     _animationController.clearListeners();
@@ -63,13 +64,12 @@ class _AnimatedimageState extends State<Animatedimage>
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
         return GestureDetector(
-          onTap: () {     
+          onTap: () {
             context.read<ArtBloc>().add(GetSelectedArt(widget.artId));
-            
+
             context
                 .read<AppBloc>()
                 .add(const AppPageChanged(AppStatus.details));
-
           },
           child: Hero(
             tag: widget.artId,
@@ -93,37 +93,11 @@ class _AnimatedimageState extends State<Animatedimage>
               width: double.infinity,
               fit: BoxFit.cover,
               alignment: FractionalOffset((_animation.value), 0),
+              //alignment: Alignment((_animation.value), (-1 + _animation.value)),
             ),
           ),
         );
       },
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('HERO'),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Hero(
-              tag: 'tag-1',
-              child: Container(
-                width: 100,
-                height: 100,
-                color: Colors.amberAccent,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
