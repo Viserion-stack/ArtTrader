@@ -34,13 +34,23 @@ class DetailsPage extends StatelessWidget {
               Text(context.read<AppBloc>().state.status.toString()),
               Expanded(
                 flex: 2,
-                child: Hero(
-                  tag: selectedArt.id!,
-                  child: Image.network(
-                    selectedArt.imageUrl!,
-                    errorBuilder: (context, error, stackTrace) {
-                      return imageFromBase64String(selectedArt.imageUrl!);
-                    },
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Hero(
+                    tag: selectedArt.id!,
+                    child: InteractiveViewer(
+                      scaleEnabled: true,
+                      constrained: true,
+                      maxScale: 5,
+                      child: Image.network(
+                        selectedArt.imageUrl!,
+                        errorBuilder: (context, error, stackTrace) {
+                          return imageFromBase64String(selectedArt.imageUrl!);
+                        },
+                        filterQuality: FilterQuality.high,
+                        //fit: BoxFit.fitWidth,
+                      ),
+                    ),
                   ),
                 ),
               ),
