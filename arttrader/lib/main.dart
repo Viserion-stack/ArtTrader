@@ -1,11 +1,6 @@
-import 'package:arttrader/domain/repositories/Art/art_repository.dart';
-import 'package:arttrader/domain/repositories/Authentication/authentication.dart';
-import 'package:arttrader/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-import 'app/app.dart';
+
+import 'export.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
