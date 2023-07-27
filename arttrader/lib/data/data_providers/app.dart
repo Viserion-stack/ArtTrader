@@ -48,9 +48,7 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-          colorSchemeSeed: const Color(0xff386a20), useMaterial3: true),
-      //TODO theme: theme,
+      theme: CustomTheme.darkTheme,          
       home: Scaffold(
         //appBar: CustomAppBar(userEmail: context.select((value) => null), userPhotoUrl: userPhotoUrl),
         body: FlowBuilder<AppStatus>(
