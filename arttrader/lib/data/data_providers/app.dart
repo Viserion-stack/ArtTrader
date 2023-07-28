@@ -48,7 +48,10 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: CustomTheme.darkTheme,          
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      //locale: const Locale('pl'),
+      supportedLocales: AppLocalizations.supportedLocales,
+      theme: CustomTheme.darkTheme,
       home: Scaffold(
         //appBar: CustomAppBar(userEmail: context.select((value) => null), userPhotoUrl: userPhotoUrl),
         body: FlowBuilder<AppStatus>(

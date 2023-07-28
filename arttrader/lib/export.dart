@@ -62,9 +62,13 @@ export 'package:firebase_core/firebase_core.dart';
 export 'package:cached_network_image/cached_network_image.dart';
 export 'package:carousel_slider/carousel_slider.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
+export 'package:flutter_localizations/flutter_localizations.dart';
+
 
 //other
 export 'dart:typed_data';
 export 'dart:async';
 export 'dart:convert';
 export 'package:flutter/material.dart';
+export 'l10n/l10n.dart';
+export 'package:flutter_gen/gen_l10n/app_localizations.dart';

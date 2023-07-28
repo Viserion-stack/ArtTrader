@@ -43,26 +43,26 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       ),
       child: BottomNavigationBar(
         //type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: const Icon(Icons.home),
+            label: AppLocalizations.of(context)!.home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
+            icon: const Icon(Icons.search),
+            label: AppLocalizations.of(context)!.search,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'Add',
+            icon: const Icon(Icons.add),
+            label: AppLocalizations.of(context)!.add,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Bids',
+            icon: const Icon(Icons.list),
+            label: AppLocalizations.of(context)!.bids,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: const Icon(Icons.settings),
+            label: AppLocalizations.of(context)!.settings,
           ),
         ],
         currentIndex: _selectedIndex,

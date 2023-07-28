@@ -1,0 +1,11 @@
+{
+  "language": "English",
+  "@language": {
+  "description": "The current Language"
+  },
+  "home": "Home",
+  "search" : "Search",
+  "add" : "Add",
+  "bids" : "Bids",
+  "settings" : "Settings"
+}
