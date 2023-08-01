@@ -66,6 +66,7 @@ class _ArtCameraState extends State<ArtCamera> with WidgetsBindingObserver {
   @override
   void dispose() {
     _cameraController.dispose();
+    _disposeController();
     super.dispose();
   }
 

@@ -22,22 +22,33 @@ class AddArtSheetForm extends StatelessWidget {
         }
       },
       child: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.memory(imageString),
-              const SizedBox(height: 16),
-              _NameInput(),
-              const SizedBox(height: 8),
-              _PriceInput(),
-              const SizedBox(height: 8),
-              _AddArtButton(),
-              const SizedBox(height: 8),
-            ],
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                splashColor: Colors.amber,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  context
+                      .read<AppBloc>()
+                      .add(const AppPageChanged(AppStatus.add));
+                },
+                icon: const Icon(
+                  Icons.close,
+                ),
+              ),
+            ),
+            SizedBox(height: 500, child: Image.memory(imageString)),
+            const SizedBox(height: 16),
+            _NameInput(),
+            const SizedBox(height: 8),
+            _PriceInput(),
+            const SizedBox(height: 8),
+            _AddArtButton(),
+            const SizedBox(height: 8),
+          ],
         ),
       ),
     );

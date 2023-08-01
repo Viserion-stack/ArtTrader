@@ -30,10 +30,12 @@ class App extends StatelessWidget {
             BlocProvider<AddArtCubit>(
                 create: (BuildContext context) =>
                     AddArtCubit(_artRepository, _authenticationRepository)),
-            BlocProvider<CameraBloc>(create: (_) => CameraBloc()
-
-                //lazy: false,
-                ),
+            BlocProvider<CameraBloc>(
+              create: (_) => CameraBloc(),
+            ),
+            BlocProvider<ConectivityBloc>(
+              create: (context) => ConectivityBloc()..add(ConectivityObserve()),
+            ),
           ],
           child: const AppView(),
         ),
@@ -54,13 +56,25 @@ class AppView extends StatelessWidget {
       theme: CustomTheme.darkTheme,
       home: Scaffold(
         //appBar: CustomAppBar(userEmail: context.select((value) => null), userPhotoUrl: userPhotoUrl),
-        body: FlowBuilder<AppStatus>(
-          state: context.select((AppBloc bloc) => bloc.state.status),
-          onGeneratePages: onGenerateAppViewPages,
-          observers: [
-            HeroController(),
-          ],
+        body: BlocConsumer<ConectivityBloc, ConectivityState>(
+          listener: (context, state) {
+            if (state is ConectivityFailure) {
+              SnackbarHelper.showSnackBar(context, kNoConnection);
+            } else if (state is ConectivitySucces) {
+              SnackbarHelper.showSnackBar(context, kConnected);
+            }
+          },
+          builder: (context, state) {
+            return FlowBuilder<AppStatus>(
+              state: context.select((AppBloc bloc) => bloc.state.status),
+              onGeneratePages: onGenerateAppViewPages,
+              observers: [
+                HeroController(),
+              ],
+            );
+          },
         ),
+
         bottomNavigationBar: const CustomBottomBar(),
       ),
     );

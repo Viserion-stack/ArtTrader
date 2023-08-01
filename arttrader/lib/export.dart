@@ -2,8 +2,12 @@ export 'core/constants/strings.dart';
 export 'core/exceptions/route_exception.dart';
 export 'core/themes/app_theme.dart';
 export 'core/utils/utils.dart';
+export 'core/utils/network_helper.dart';
+export 'core/utils/snackbar_helper.dart';
+
 export 'data/data_providers/app.dart';
 export 'data/data_providers/bloc/app_bloc.dart';
+export 'data/data_providers/bloc/conectivity_bloc.dart';
 export 'data/repositories/Authentication/authentication.dart';
 export 'data/repositories/Art/art_repository.dart';
 export 'data/repositories/Cache/cache.dart';
@@ -63,6 +67,8 @@ export 'package:cached_network_image/cached_network_image.dart';
 export 'package:carousel_slider/carousel_slider.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';
+export 'package:connectivity_plus/connectivity_plus.dart';
+
 
 
 //other

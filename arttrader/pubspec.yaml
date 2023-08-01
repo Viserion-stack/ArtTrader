@@ -57,6 +57,8 @@ dependencies:
   flutter_native_splash: ^2.3.1
   flutter_localizations:
     sdk: flutter
+  connectivity_plus: ^4.0.1
+  flutter_network_connectivity: ^0.0.6
 
 # flutter_native_splash-development.yaml
 flutter_native_splash:

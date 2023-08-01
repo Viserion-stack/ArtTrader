@@ -38,7 +38,8 @@ class _AddPageState extends State<AddPage> {
         builder: (context, state) {
           return Scaffold(
               body: Stack(
-            fit: StackFit.expand,
+            // alignment: Alignment.center,
+            //fit: StackFit.expand,
             children: [
               Positioned.fill(
                 child: ArtCamera(
@@ -50,55 +51,63 @@ class _AddPageState extends State<AddPage> {
                   },
                 ),
               ),
-              CupertinoButton(
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: CupertinoButton(
+                  alignment: Alignment.bottomLeft,
+                  onPressed: () async {
+                    context.read<CameraBloc>().add(const TakePhotoRequest());
+                    final ImagePicker picker = ImagePicker();
+                    final XFile? image =
+                        await picker.pickImage(source: ImageSource.gallery);
+                    final imageAsString = await image!.imageBase64();
+                    // ignore: use_build_context_synchronously
+                    context.read<CameraBloc>().add(PhotoTaken(imageAsString!));
+                  },
+                  child: const Icon(
+                    Icons.photo_library_sharp,
+                    color: Colors.white,
+                    size: 40,
+                  ),
+                ),
+              ),
+              Align(
                 alignment: Alignment.bottomCenter,
-                onPressed: () {},
-                child: SizedBox(
-                  width: 80.0,
-                  height: 80.0,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      context.read<CameraBloc>().add(const TakePhotoRequest());
-                      final photoData = await takePhoto();
-                      if (photoData != null) {
-                        // ignore: use_build_context_synchronously
-                        context.read<CameraBloc>().add(PhotoTaken(photoData));
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(0.0),
-                      backgroundColor: Colors.transparent,
-                      shape: const CircleBorder(),
-                      side: const BorderSide(
-                        color: Colors.white,
-                        width: 3.0,
+                child: CupertinoButton(
+                  onPressed: () {},
+                  child: SizedBox(
+                    width: 80.0,
+                    height: 80.0,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        context
+                            .read<CameraBloc>()
+                            .add(const TakePhotoRequest());
+                        final photoData = await takePhoto();
+                        if (photoData != null) {
+                          // ignore: use_build_context_synchronously
+                          context.read<CameraBloc>().add(PhotoTaken(photoData));
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(0.0),
+                        backgroundColor: Colors.transparent,
+                        shape: const CircleBorder(),
+                        side: const BorderSide(
+                          color: Colors.white,
+                          width: 3.0,
+                        ),
                       ),
-                    ),
-                    child: const CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 31,
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 31,
+                      ),
                     ),
                   ),
                 ),
               ),
-              CupertinoButton(
-                alignment: Alignment.bottomLeft,
-                onPressed: () async {
-                  context.read<CameraBloc>().add(const TakePhotoRequest());
-                  final ImagePicker picker = ImagePicker();
-                  final XFile? image =
-                      await picker.pickImage(source: ImageSource.gallery);
-                  final imageAsString = await image!.imageBase64();
-                  // ignore: use_build_context_synchronously
-                  context.read<CameraBloc>().add(PhotoTaken(imageAsString!));
-                },
-                child: const Icon(
-                  Icons.photo_library_sharp,
-                  color: Colors.white,
-                  size: 40,
-                ),
-              ),
             ],
+            
           ));
         },
       ),
@@ -110,6 +119,7 @@ void showModalSheet(BuildContext context, CameraState state) async {
   bool? isModalOpen = state.isModalOpen;
   if (isModalOpen!) {
     showModalBottomSheet(
+        useSafeArea: true,
         context: context,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
