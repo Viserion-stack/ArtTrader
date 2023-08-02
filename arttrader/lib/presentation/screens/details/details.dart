@@ -49,6 +49,7 @@ class DetailsPage extends StatelessWidget {
               Text('current Bid: ${state.art!.price}'),
               CupertinoButton.filled(
                 onPressed: () {
+                  //TODO add user
                   final bid = Bid(
                       bidderName: 'TestUser',
                       timeStamp: DateTime.now(),
@@ -58,7 +59,7 @@ class DetailsPage extends StatelessWidget {
                       .read<ArtBloc>()
                       .add(PlaceBidRequested(art: state.art!, bid: bid));
                 },
-                child: Text(AppLocalizations.of(context)!.palaceBid),
+                child: Text(context.strings.palaceBid),
               ),
               Expanded(
                 child: ListView.builder(

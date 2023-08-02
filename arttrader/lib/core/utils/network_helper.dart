@@ -1,10 +1,10 @@
 import 'package:arttrader/export.dart';
 
 class NetworkHelper {
-  static void observeNetwork() async {
+  bool firstLaunch = true;
+  void observeNetwork() async {
     // Initialize the connectivity plugin.
     Connectivity connectivity = Connectivity();
-//TODO: handle status on first launch
     // Check the connectivity status before listening for changes.
     ConnectivityResult connectivityResult =
         await connectivity.checkConnectivity();
@@ -13,29 +13,33 @@ class NetworkHelper {
       ConectivityBloc().add(Offline());
     } else {
       // There is an internet connection, listen for changes.
+
       connectivity.onConnectivityChanged.listen((ConnectivityResult event) {
-        // Check the new connectivity status.
-        switch (event) {
-          case ConnectivityResult.wifi:
-            ConectivityBloc().add(Online());
+        if (!firstLaunch) {
+          switch (event) {
+            case ConnectivityResult.wifi:
+              ConectivityBloc().add(Online());
 
-            debugPrint('Connected to wifi');
+              debugPrint('Connected to wifi');
 
-            break;
-          case ConnectivityResult.mobile:
-            debugPrint('Connected to mobile data');
-            ConectivityBloc().add(Online());
+              break;
+            case ConnectivityResult.mobile:
+              debugPrint('Connected to mobile data');
+              ConectivityBloc().add(Online());
 
-            break;
-          case ConnectivityResult.none:
-            debugPrint('No internet connection');
-            ConectivityBloc().add(Offline());
+              break;
+            case ConnectivityResult.none:
+              debugPrint('No internet connection');
+              ConectivityBloc().add(Offline());
 
-            break;
+              break;
 
-          default:
-            break;
+            default:
+              break;
+          }
         }
+        firstLaunch = false;
+        // Check the new connectivity status.
       });
     }
   }

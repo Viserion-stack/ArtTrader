@@ -79,7 +79,7 @@ class _AnimatedimageState extends State<Animatedimage>
               },
               errorWidget: (context, url, error) {
                 canceLisetner();
-                return imageFromBase64String(url);
+                return Image.network(url);
               },
               imageUrl: widget.imageUrl,
               //alignment: Alignment.center,

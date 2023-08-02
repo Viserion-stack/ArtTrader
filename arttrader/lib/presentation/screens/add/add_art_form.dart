@@ -19,7 +19,7 @@ class AddArtSheetForm extends StatelessWidget {
             ..showSnackBar(
               SnackBar(
                 content: Text(state.errorMessage ??
-                    AppLocalizations.of(context)!.addingFailed),
+                    context.strings.addingFailed),
               ),
             );
         }
@@ -120,12 +120,12 @@ class _AddArtButton extends StatelessWidget {
                   final imageUrl = context.read<CameraBloc>().state.image;
                   context.read<AddArtCubit>().addArt(imageUrl!).then((value) {
                     SnackbarHelper.showSnackBar(
-                        context, AppLocalizations.of(context)!.addingSuccess);
+                        context, context.strings.addingSuccess);
                     Navigator.of(context).pop();
                   });
                 }
               },
-              child: Text(AppLocalizations.of(context)!.add),
+              child: Text(context.strings.add),
             );
     });
   }

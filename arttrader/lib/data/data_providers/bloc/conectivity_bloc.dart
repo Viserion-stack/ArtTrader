@@ -17,7 +17,7 @@ class ConectivityBloc extends Bloc<ConectivityEvent, ConectivityState> {
   factory ConectivityBloc() => _instance;
 
   void _observe(event, emit) {
-    NetworkHelper.observeNetwork();
+    NetworkHelper().observeNetwork();
   }
   void _online(Online event, emit) {
     emit(const ConectivityState.online());

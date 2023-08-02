@@ -61,12 +61,12 @@ class AppView extends StatelessWidget {
             if (state.status == ConectivityStatus.offline) {
               SnackbarHelper.showSnackBar(
                 context,
-                AppLocalizations.of(context)!.connectionOffline,
+                context.strings.connectionOffline,
               );
             } else if (state.status == ConectivityStatus.online) {
               SnackbarHelper.showSnackBar(
                 context,
-                AppLocalizations.of(context)!.connectionOnline,
+                context.strings.connectionOnline,
               );
             }
           },

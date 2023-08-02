@@ -27,6 +27,7 @@ export 'presentation/screens/login/view/login_view.dart';
 export 'presentation/screens/login/view/login_form.dart';
 export 'presentation/screens/search/search_page.dart';
 export 'presentation/screens/settings/settings_page.dart';
+export 'presentation/screens/settings/widgets/settings_section.dart';
 export 'presentation/screens/signup/view/sign_up_page.dart';
 export 'presentation/screens/signup/view/sign_up.form.dart';
 

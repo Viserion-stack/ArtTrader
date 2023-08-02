@@ -76,7 +76,7 @@ class _SearchPageState extends State<SearchPage> {
                             child: Image.network(
                               artList[index].imageUrl!,
                               errorBuilder: (context, error, stackTrace) {
-                                return imageFromBase64String(
+                                return Image.network(
                                     artList[index].imageUrl!);
                               },
                             ),

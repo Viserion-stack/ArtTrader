@@ -15,6 +15,15 @@
   "addingSuccess" : "Art added successfully!",
   "palaceBid" : "Place a bid",
   "myArts" : "My Arts",
-  "myBids" : "My Bids"
+  "myBids" : "My Bids",
+  "hi" : "Hi",
+  "inviteMembers": "Invite Members",
+  "sendFeedback": "Send Feedback",
+  "rateArtTrader": "Rate Art Trader",
+  "helpCenter": "Help Center",
+  "about": "About",
+  "privacyMembers": "Privacy&Members",
+  "logOut": "Log Out"
+  
 
 }

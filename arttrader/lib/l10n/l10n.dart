@@ -6,3 +6,9 @@ class L10n {
     Locale('pl'),
   ];
 }
+
+
+extension Strings on BuildContext {
+  AppLocalizations get strings => AppLocalizations.of(this)!;
+  //String get locale => strings.localeName;
+}

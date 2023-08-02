@@ -22,6 +22,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
   }
 
+  get getUerData => _authenticationRepository.currentUser;
   void _onUserChanged(_AppUserChanged event, Emitter<AppState> emit) {
     emit(
       event.user.isNotEmpty

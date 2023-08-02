@@ -12,8 +12,8 @@ class BidsPage extends StatelessWidget {
           title: TabBar(
             //controller: _tabController,
             tabs: [
-              Tab(text: AppLocalizations.of(context)!.myArts),
-              Tab(text: AppLocalizations.of(context)!.myBids),
+              Tab(text: context.strings.myArts),
+              Tab(text: context.strings.myBids),
             ],
           ),
         ),

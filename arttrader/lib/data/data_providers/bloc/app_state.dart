@@ -37,6 +37,7 @@ final class AppState extends Equatable {
       : this._(
           previousStatus: previousStatus,
           status: status,
+          
         );
 
   @override
