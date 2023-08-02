@@ -4,13 +4,13 @@ class NetworkHelper {
   static void observeNetwork() async {
     // Initialize the connectivity plugin.
     Connectivity connectivity = Connectivity();
-
+//TODO: handle status on first launch
     // Check the connectivity status before listening for changes.
     ConnectivityResult connectivityResult =
         await connectivity.checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       // No internet connection, do something.
-      //ConectivityBloc().add(Offline());
+      ConectivityBloc().add(Offline());
     } else {
       // There is an internet connection, listen for changes.
       connectivity.onConnectivityChanged.listen((ConnectivityResult event) {

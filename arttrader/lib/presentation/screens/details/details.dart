@@ -48,17 +48,18 @@ class DetailsPage extends StatelessWidget {
               ),
               Text('current Bid: ${state.art!.price}'),
               CupertinoButton.filled(
-                  child: const Text('Place a bid by 1'),
-                  onPressed: () {
-                    final bid = Bid(
-                        bidderName: 'TestUser',
-                        timeStamp: DateTime.now(),
-                        bidAmount: (state.art!.price! + 1));
+                onPressed: () {
+                  final bid = Bid(
+                      bidderName: 'TestUser',
+                      timeStamp: DateTime.now(),
+                      bidAmount: (state.art!.price! + 1));
 
-                    context
-                        .read<ArtBloc>()
-                        .add(PlaceBidRequested(art: state.art!, bid: bid));
-                  }),
+                  context
+                      .read<ArtBloc>()
+                      .add(PlaceBidRequested(art: state.art!, bid: bid));
+                },
+                child: Text(AppLocalizations.of(context)!.palaceBid),
+              ),
               Expanded(
                 child: ListView.builder(
                   itemCount: selectedArt.biddingHistory!.length,

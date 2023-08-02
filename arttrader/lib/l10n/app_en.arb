@@ -7,5 +7,14 @@
   "search" : "Search",
   "add" : "Add",
   "bids" : "Bids",
-  "settings" : "Settings"
+  "settings" : "Settings",
+  "connectionOffline" : " You are offline. Some features may not work!",
+  "connectionOnline" : " You are online",
+  "add" : "Add",
+  "addingFailed" : "Art adding failed!",
+  "addingSuccess" : "Art added successfully!",
+  "palaceBid" : "Place a bid",
+  "myArts" : "My Arts",
+  "myBids" : "My Bids"
+
 }

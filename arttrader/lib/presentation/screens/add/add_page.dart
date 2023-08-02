@@ -14,13 +14,14 @@ class _AddPageState extends State<AddPage> {
   @override
   Widget build(BuildContext context) {
     CameraController? cameraController;
-    Future<String?> takePhoto() async {
+    Future takePhoto() async {
       try {
         if (cameraController != null &&
             !cameraController!.value.isTakingPicture) {
           final photo = await cameraController!.takePicture();
 
-          return await photo.imageBase64();
+          //return await photo.imageBase64();
+          return photo;
         }
       } on Exception catch (_) {
         Navigator.of(context).pop();
@@ -60,9 +61,9 @@ class _AddPageState extends State<AddPage> {
                     final ImagePicker picker = ImagePicker();
                     final XFile? image =
                         await picker.pickImage(source: ImageSource.gallery);
-                    final imageAsString = await image!.imageBase64();
+                    //final imageAsString = await image!.imageBase64();
                     // ignore: use_build_context_synchronously
-                    context.read<CameraBloc>().add(PhotoTaken(imageAsString!));
+                    context.read<CameraBloc>().add(PhotoTaken(image!));
                   },
                   child: const Icon(
                     Icons.photo_library_sharp,
@@ -125,11 +126,11 @@ void showModalSheet(BuildContext context, CameraState state) async {
             borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
         isScrollControlled: true,
         builder: (context) {
-          Uint8List bytesImage;
-          String? imgString = state.image;
-          bytesImage = const Base64Decoder().convert(imgString!);
+          //Uint8List bytesImage;
+          //String? imgString = state.image;
+          //bytesImage = const Base64Decoder().convert(imgString!);
 
-          return AddArtSheetForm(imageString: bytesImage);
+          return AddArtSheetForm(image: state.image);
         }).whenComplete(() {
       context.read<CameraBloc>().add(const CloseModal());
     });

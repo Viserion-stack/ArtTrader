@@ -1,8 +1,16 @@
 {
-    "language": "Polski",
-    "home": "Start",
-    "search" : "Szukaj",
-    "add" : "Dodaj",
-    "bids" : "Licytacje",
-    "settings" : "Ustawienia"
+ "language": "Polski",
+ "home": "Start",
+ "search" : "Szukaj",
+ "add" : "Dodaj",
+ "bids" : "Licytacje",
+ "settings" : "Ustawienia",
+ "connectionOffline" : " Jesteś offline. Niektóre funkcje mogą być ograniczone!",
+ "connectionOnline" : "Jesteś online.",
+  "add" : "Dodaj",
+  "addingFailed" : "Niepowodzenie podczas dodawania",
+  "addingSucces" : "Dodano!",
+  "palaceBid" : "Licytuj",
+   "myArts" : "Arty",
+  "myBids" : "Licytajce"
 }

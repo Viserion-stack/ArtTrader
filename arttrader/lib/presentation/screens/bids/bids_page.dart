@@ -9,11 +9,11 @@ class BidsPage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const TabBar(
+          title: TabBar(
             //controller: _tabController,
             tabs: [
-              Tab(text: 'My Arts'),
-              Tab(text: 'My Bids'),
+              Tab(text: AppLocalizations.of(context)!.myArts),
+              Tab(text: AppLocalizations.of(context)!.myBids),
             ],
           ),
         ),

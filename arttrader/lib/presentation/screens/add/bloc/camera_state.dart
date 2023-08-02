@@ -9,7 +9,7 @@ enum CameraStatus {
 
 final class CameraState extends Equatable {
   final CameraStatus status;
-  final String? image;
+  final XFile? image;
   final CameraController? cameraController;
   final bool? isModalOpen;
 
@@ -25,7 +25,7 @@ final class CameraState extends Equatable {
 
   CameraState copyWith({
     CameraStatus? status,
-    String? image,
+    XFile? image,
     CameraController? cameraController,
     bool? isModalOpen,
   }) {

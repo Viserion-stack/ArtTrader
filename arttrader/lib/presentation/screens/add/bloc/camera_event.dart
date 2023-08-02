@@ -18,7 +18,7 @@ final class TakePhotoRequest extends CameraEvent {
 }
 
 final class PhotoTaken extends CameraEvent {
-  final String image;
+  final XFile image;
   const PhotoTaken(this.image);
 }
 

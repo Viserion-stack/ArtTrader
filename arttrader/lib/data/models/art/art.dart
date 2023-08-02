@@ -39,7 +39,7 @@ class Art extends Equatable {
     );
   }
 
-static List<Bid> _parseBiddingHistory(dynamic jsonBids) {
+  static List<Bid> _parseBiddingHistory(dynamic jsonBids) {
     final List<Bid> biddingHistory = [];
 
     if (jsonBids is Iterable) {
@@ -86,8 +86,7 @@ static List<Bid> _parseBiddingHistory(dynamic jsonBids) {
   Map<String, dynamic> toJson() => {
         'id': id,
         'addedBy': addedBy,
-        'imageUrl':
-            'https://firebasestorage.googleapis.com/v0/b/arttrader-d69bb.appspot.com/o/sjcolors.jpg?alt=media&token=9f0d1339-075d-44fa-8c72-9d653d3fbcdb', //imageUrl,
+        'imageUrl': imageUrl,
         'name': name,
         'biddingHistory': {
           'bidAmount': price,

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:arttrader/export.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 part 'add_art_state.dart';
 
 class AddArtCubit extends Cubit<AddArtState> {
@@ -27,11 +30,19 @@ class AddArtCubit extends Cubit<AddArtState> {
     );
   }
 
-  Future<void> addArt(String imageUrl) async {
+  Future<void> addArt(XFile image) async {
     if (!state.isValid) return;
     emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
     try {
       final user = _authenticationRepository.currentUser;
+      String imageUrl = '';
+      final Reference storageRef =
+          FirebaseStorage.instance.ref('${user.email}/${image.name}');
+      final UploadTask uploadTask = storageRef.putFile(File(image.path));
+
+      // Listen for the upload task to complete
+      imageUrl = await (await uploadTask).ref.getDownloadURL();
+
       final artToAdd = Art(
           id: '',
           addedBy: user.email,

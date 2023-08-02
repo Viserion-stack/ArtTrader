@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:arttrader/export.dart';
 
 class AddArtSheetForm extends StatelessWidget {
-  final Uint8List imageString;
+  final XFile? image;
   const AddArtSheetForm({
     Key? key,
-    required this.imageString,
+    required this.image,
   }) : super(key: key);
 
   @override
@@ -16,7 +18,8 @@ class AddArtSheetForm extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage ?? 'Adding Failure'),
+                content: Text(state.errorMessage ??
+                    AppLocalizations.of(context)!.addingFailed),
               ),
             );
         }
@@ -40,7 +43,8 @@ class AddArtSheetForm extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 500, child: Image.memory(imageString)),
+            //SizedBox(height: 500, child: Image.memory(imageString)),
+            SizedBox(height: 500, child: Image.file(File(image!.path))),
             const SizedBox(height: 16),
             _NameInput(),
             const SizedBox(height: 8),
@@ -62,7 +66,7 @@ class _NameInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.name != current.name,
       builder: (context, state) {
         return TextField(
-          key: const Key('loginForm_nameInput_textField'),
+          key: const Key('AddArtForm_nameInput_textField'),
           onChanged: (name) => context.read<AddArtCubit>().nameChanged(name),
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
@@ -83,10 +87,11 @@ class _PriceInput extends StatelessWidget {
         buildWhen: (previous, current) => previous.price != current.price,
         builder: (context, state) {
           return TextField(
-            key: const Key('LoginForm_priceInput_textField'),
+            key: const Key('AddArtForm_priceInput_textField'),
             onChanged: (price) =>
                 context.read<AddArtCubit>().priceChanged(price),
-            obscureText: true,
+            keyboardType: const TextInputType.numberWithOptions(
+                signed: true, decimal: true),
             decoration: InputDecoration(
                 labelText: 'Price',
                 helperText: '',
@@ -113,10 +118,14 @@ class _AddArtButton extends StatelessWidget {
               onPressed: () {
                 if (state.isValid) {
                   final imageUrl = context.read<CameraBloc>().state.image;
-                  context.read<AddArtCubit>().addArt(imageUrl!);
+                  context.read<AddArtCubit>().addArt(imageUrl!).then((value) {
+                    SnackbarHelper.showSnackBar(
+                        context, AppLocalizations.of(context)!.addingSuccess);
+                    Navigator.of(context).pop();
+                  });
                 }
               },
-              child: const Text('Add'),
+              child: Text(AppLocalizations.of(context)!.add),
             );
     });
   }
