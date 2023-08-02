@@ -10,7 +10,7 @@ class NetworkHelper {
         await connectivity.checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
       // No internet connection, do something.
-      ConectivityBloc().add(Offline());
+      //ConectivityBloc().add(Offline());
     } else {
       // There is an internet connection, listen for changes.
       connectivity.onConnectivityChanged.listen((ConnectivityResult event) {
@@ -18,6 +18,7 @@ class NetworkHelper {
         switch (event) {
           case ConnectivityResult.wifi:
             ConectivityBloc().add(Online());
+
             debugPrint('Connected to wifi');
 
             break;

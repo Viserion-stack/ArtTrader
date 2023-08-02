@@ -58,13 +58,16 @@ class AppView extends StatelessWidget {
         //appBar: CustomAppBar(userEmail: context.select((value) => null), userPhotoUrl: userPhotoUrl),
         body: BlocConsumer<ConectivityBloc, ConectivityState>(
           listener: (context, state) {
-            if (state is ConectivityFailure) {
+
+            print(state.status);
+            if (state.status == ConectivityStatus.offline) {
               SnackbarHelper.showSnackBar(context, kNoConnection);
-            } else if (state is ConectivitySucces) {
+            } else if (state.status == ConectivityStatus.online) {
               SnackbarHelper.showSnackBar(context, kConnected);
             }
           },
           builder: (context, state) {
+            print(state.status);
             return FlowBuilder<AppStatus>(
               state: context.select((AppBloc bloc) => bloc.state.status),
               onGeneratePages: onGenerateAppViewPages,

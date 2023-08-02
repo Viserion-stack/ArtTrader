@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 
 import '../../../core/utils/network_helper.dart';
 
@@ -6,7 +7,7 @@ part 'conectivity_event.dart';
 part 'conectivity_state.dart';
 
 class ConectivityBloc extends Bloc<ConectivityEvent, ConectivityState> {
-  ConectivityBloc._() : super(ConectivityInitial()) {
+  ConectivityBloc._() : super(const ConectivityState.initial()) {
     on<ConectivityObserve>(_observe);
     on<Online>(_online);
     on<Offline>(_offline);
@@ -18,15 +19,11 @@ class ConectivityBloc extends Bloc<ConectivityEvent, ConectivityState> {
   void _observe(event, emit) {
     NetworkHelper.observeNetwork();
   }
-
-  // void _notifyStatus(ConectivityNotify event, emit) {
-  //   event.isConnected ? emit(ConectivitySucces()) : emit(ConectivityFailure());
-  // }
   void _online(Online event, emit) {
-    emit(ConectivitySucces());
+    emit(const ConectivityState.online());
   }
 
   void _offline(Offline event, emit) {
-    emit(ConectivityFailure());
+    emit(const ConectivityState.offline());
   }
 }

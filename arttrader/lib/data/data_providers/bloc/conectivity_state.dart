@@ -1,9 +1,32 @@
 part of 'conectivity_bloc.dart';
 
-abstract class ConectivityState {}
+enum ConectivityStatus {
+  offline,
+  online,
+}
 
-class ConectivityInitial extends ConectivityState {}
+final class ConectivityState extends Equatable {
+  final ConectivityStatus status;
 
-class ConectivitySucces extends ConectivityState {}
+  const ConectivityState._({
+    required this.status,
+  });
 
-class ConectivityFailure extends ConectivityState {}
+  const ConectivityState.initial()
+      : this._(
+          status: ConectivityStatus.offline,
+        );
+
+  const ConectivityState.online()
+      : this._(
+          status: ConectivityStatus.online,
+        );
+
+  const ConectivityState.offline()
+      : this._(
+          status: ConectivityStatus.offline,
+        );
+
+  @override
+  List<Object?> get props => [status];
+}
