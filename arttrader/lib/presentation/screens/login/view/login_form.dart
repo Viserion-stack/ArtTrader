@@ -23,11 +23,7 @@ class LoginForm extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              //TODO
-              // Image.asset(
-              //   'name',
-              //   height: 120,
-              // ),
+        
               const SizedBox(height: 16),
               _EmailInput(),
               const SizedBox(height: 8),

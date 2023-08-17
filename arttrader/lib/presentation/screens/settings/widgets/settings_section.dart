@@ -21,7 +21,7 @@ class UserSection extends StatelessWidget {
         title: user.name == null
             ? Text('${context.strings.hi} ${user.email}')
             : Text('${context.strings.hi} ${user.name}'),
-        subtitle: Text('LOREM IPSUM'),
+        subtitle: const Text('LOREM IPSUM'),
       ),
     );
   }

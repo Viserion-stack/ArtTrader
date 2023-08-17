@@ -7,12 +7,8 @@ class HomePage extends StatelessWidget {
   static Page<void> page() => const MaterialPage<void>(child: HomePage());
   @override
   Widget build(BuildContext context) {
-    //final user = context.select((AppBloc bloc) => bloc.state.user);
     return Scaffold(
-      // appBar: CustomAppBar(
-      //   userEmail: user.email!,
-      //   userPhotoUrl: user.photo!,
-      // ),
+
       body: BlocBuilder<ArtBloc, ArtState>(
         builder: (context, state) {
           return state.status == ArtStatus.loading

@@ -73,12 +73,11 @@ class _SearchPageState extends State<SearchPage> {
                         ListTile(
                           leading: Hero(
                             tag: artList[index].id!,
-                            child: Image.network(
-                              artList[index].imageUrl!,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.network(
-                                    artList[index].imageUrl!);
-                              },
+                            child: CachedNetworkImage(
+                              imageUrl: artList[index].imageUrl!,
+                              width: 50,
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             ),
                           ),
                           title: Text(artList[index].name!),

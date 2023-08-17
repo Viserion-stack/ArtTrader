@@ -1,5 +1,6 @@
 import 'package:arttrader/export.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class DetailsPage extends StatelessWidget {
@@ -47,11 +48,32 @@ class DetailsPage extends StatelessWidget {
                 ),
               ),
               Text('current Bid: ${state.art!.price}'),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp('[0-9.]')),
+                ],
+                //initialValue: (state.art!.price! + 1).toString(),
+                decoration: InputDecoration(
+                    hintText: ((state.art!.price! + 1).toString()),
+                    fillColor: Colors.white,
+                    icon: const Icon(Icons.monetization_on_rounded)),
+                validator: (value) {
+                  int val = int.parse(value!);
+                  if (value.isEmpty || val <= state.art!.price!) {
+                    return 'Please enter vaild bid value';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  //TODO: handle validation
+                },
+              ),
               CupertinoButton.filled(
                 onPressed: () {
-                  //TODO add user
+                  final User user = context.read<AppBloc>().getUerData;
                   final bid = Bid(
-                      bidderName: 'TestUser',
+                      bidderName: user.email,
                       timeStamp: DateTime.now(),
                       bidAmount: (state.art!.price! + 1));
 
@@ -66,19 +88,19 @@ class DetailsPage extends StatelessWidget {
                   itemCount: selectedArt.biddingHistory!.length,
                   itemBuilder: (context, index) {
                     return ListTile(
+                      titleAlignment: ListTileTitleAlignment.center,
                       leading: Text(
                         selectedArt.biddingHistory![index].bidderName!,
                       ),
-                      title: Text(selectedArt.biddingHistory![index].bidAmount!
-                          .toString()),
-                      trailing: Text(DateFormat('yyyy-MM-dd HH:mm:ss')
+                      title: Text(
+                        selectedArt.biddingHistory![index].bidAmount!
+                            .toString(),
+                        textAlign: TextAlign.end,
+                      ),
+                      trailing: Text(DateFormat('yyyy-MM-dd \n HH:mm:ss')
                           .format(selectedArt.biddingHistory![index].timeStamp!)
                           .toString()),
                     );
-                    //   trailing: Text(selectedArt
-                    //       .biddigHistory![index].timeStamp!
-                    //       .toString()),
-                    // );
                   },
                 ),
               )

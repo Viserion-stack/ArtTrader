@@ -44,14 +44,25 @@ class MyArtsPage extends StatelessWidget {
                 itemCount: state.myCollection!.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(
-                        state.myCollection![index].imageUrl!,
+                    
+                    leading: CachedNetworkImage(
+                      imageUrl: state.myCollection![index].imageUrl!,
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(
+                        color: Colors.transparent,
+                      ),
+                      imageBuilder: (context, imageProvider) => CircleAvatar(
+                        radius: 50,
+                        backgroundImage: imageProvider,
                       ),
                     ),
                     title: Text(state.myCollection![index].name.toString()),
-                    trailing: Text('${state.myCollection![index].price} \$'),
+                    trailing: Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: Text('${state.myCollection![index].price} \$'),
+                    ),
                     contentPadding: const EdgeInsets.all(4),
                   );
                 },
@@ -78,10 +89,15 @@ class MyBidsPage extends StatelessWidget {
       itemCount: myBidList.length,
       itemBuilder: (context, index) {
         return ListTile(
-          leading: CircleAvatar(
-            radius: 50,
-            backgroundImage: NetworkImage(
-              myBidList[index].imageUrl!,
+          leading: CachedNetworkImage(
+            imageUrl: myBidList[index].imageUrl!,
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+            placeholder: (context, url) => const CircularProgressIndicator(
+              color: Colors.transparent,
+            ),
+            imageBuilder: (context, imageProvider) => CircleAvatar(
+              radius: 50,
+              backgroundImage: imageProvider,
             ),
           ),
           title: Text(myBidList[index].name.toString()),
