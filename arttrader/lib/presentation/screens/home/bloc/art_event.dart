@@ -53,6 +53,15 @@ final class GetMyArtList extends ArtEvent {
   const GetMyArtList();
 }
 
+final class UpdateLikeCount extends ArtEvent {
+  final Art art;
+  final int newLikeCount;
+  const UpdateLikeCount({
+    required this.art,
+    required this.newLikeCount,
+  });
+}
+
 final class SetListIndex extends ArtEvent {
   final int index;
   const SetListIndex(this.index);

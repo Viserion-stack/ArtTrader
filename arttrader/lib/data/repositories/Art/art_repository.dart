@@ -140,6 +140,22 @@ class ArtRepository {
     }
   }
 
+  Future<void> updateLikesCount(Art art, int newLikeCount) async {
+    try {
+      CollectionReference artCollection = _firebaseFirestore.collection('art');
+      DocumentReference documentRef = artCollection.doc(art.id);
+      String artId = documentRef.id;
+      await documentRef.update({'likes': newLikeCount});
+      debugPrint('Likes count changed  successfully on $artId');
+    } on FirebaseException catch (e) {
+      debugPrint(e.toString());
+      GetArtsFailure.fromCode(e.code);
+    } catch (error) {
+      debugPrint(error.toString());
+      throw GetArtsFailure(error.toString());
+    }
+  }
+
   Future<void> deleteArt(Art art) async {
     try {
       final DocumentReference documentRef =

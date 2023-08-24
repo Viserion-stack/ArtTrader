@@ -60,6 +60,8 @@ dependencies:
   connectivity_plus: ^4.0.1
   flutter_network_connectivity: ^0.0.6
   firebase_storage: ^11.2.5
+  like_button: ^2.0.5
+  shared_preferences: ^2.2.0
 
 # flutter_native_splash-development.yaml
 flutter_native_splash:

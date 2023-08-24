@@ -1,4 +1,5 @@
 import 'package:arttrader/export.dart';
+import 'package:arttrader/presentation/screens/home/widgets/right_panel.dart';
 import 'animated_photo.dart';
 
 class ArtList extends StatelessWidget {
@@ -24,12 +25,21 @@ class ArtList extends StatelessWidget {
                   (BuildContext context, int itemIndex, int pageViewIndex) {
                 return Container(
                   color: const Color(0xFF303030),
-                  child: Center(
-                    child: Animatedimage(
-                      imageUrl: artList[itemIndex].imageUrl!,
-                      pageIndex: pageViewIndex,
-                      artId: artList[itemIndex].id!,
-                    ),
+                  child: Stack(
+                    children: [
+                      Animatedimage(
+                        imageUrl: artList[itemIndex].imageUrl!,
+                        pageIndex: pageViewIndex,
+                        artId: artList[itemIndex].id!,
+                      ),
+                      Positioned(
+                        bottom: 100,
+                        right: 7,
+                        child: RightPanel(
+                          art: artList[itemIndex],
+                        ),
+                      ),
+                    ],
                   ),
                 );
               },

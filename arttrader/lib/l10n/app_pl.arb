@@ -20,5 +20,11 @@
  "helpCenter": "Centrum Pomcy",
  "about": "O Nas",
  "privacyMembers": "Polityka Prywatności",
- "logOut": "Wyloguj"
+ "logOut": "Wyloguj",
+ "bidValidatorMessage": "Wprowadz poprawną wartość",
+ "currentBid": "Aktualna oferta",
+"shareText": "Udostępnij"
+
+
+
 }

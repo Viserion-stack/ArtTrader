@@ -18,6 +18,7 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
     on<GetSelectedArt>(_onGetSelectedArt);
     on<AddItemToCollectionRequested>(_onAddItemToCollectionRequested);
     on<PlaceBidRequested>(_onPlaceBidRequested);
+    on<UpdateLikeCount>(_onUpdateLikeCount);
     on<DeleteArtRequested>(_onDeleteArtRequested);
     on<SetListIndex>(_onSetListIndex);
   }
@@ -63,7 +64,7 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
   void _onGetArtDataCollection(
       GetArtsRequested event, Emitter<ArtState> emit) async {
     emit(state.copyWith(status: ArtStatus.loading));
-    await Future.delayed(const Duration(seconds: 2), () {});
+    //await Future.delayed(const Duration(seconds: 2), () {});
     try {
       final result = await _artRepository.getArts();
       emit(state.copyWith(status: ArtStatus.succes, artCollection: result));
@@ -93,11 +94,34 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
 
   Future<void> _onPlaceBidRequested(
       PlaceBidRequested event, Emitter<ArtState> emit) async {
+    emit(state.copyWith(
+      status: ArtStatus.loading,
+    ));
+    await Future.delayed(const Duration(seconds: 2), () {});
     try {
       await _artRepository.placeBid(event.art, event.bid);
       emit(state.copyWith(
         status: ArtStatus.succes,
       ));
+    } catch (e) {
+      emit(state.copyWith(status: ArtStatus.error));
+    }
+  }
+
+  Future<void> _onUpdateLikeCount(
+      UpdateLikeCount event, Emitter<ArtState> emit) async {
+    try {
+      final Future<SharedPreferences> prefs0 = SharedPreferences.getInstance();
+      final SharedPreferences prefs = await prefs0;
+      List<String> likedArtIds = prefs.getStringList('userLikes') ?? [];
+      if (likedArtIds.contains(event.art.id)) {
+        likedArtIds.remove(event.art.id);
+      } else {
+        likedArtIds.add(event.art.id!);
+      }
+      await prefs.setStringList('userLikes', likedArtIds);
+
+      await _artRepository.updateLikesCount(event.art, event.newLikeCount);
     } catch (e) {
       emit(state.copyWith(status: ArtStatus.error));
     }

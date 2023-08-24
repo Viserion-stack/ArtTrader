@@ -15,6 +15,7 @@ class Art extends Equatable {
   final String? imageUrl;
   final List<Bid>? biddingHistory;
   final int? price;
+  final int? likes;
 
   /// {@macro art}
   const Art({
@@ -24,6 +25,7 @@ class Art extends Equatable {
     required this.imageUrl,
     required this.biddingHistory,
     required this.price,
+    required this.likes,
   });
   factory Art.fromJson(Map<String, dynamic> json) {
     final List<Bid> biddingHistory =
@@ -36,6 +38,7 @@ class Art extends Equatable {
       imageUrl: json['imageUrl'],
       biddingHistory: biddingHistory,
       price: json['price'],
+      likes: json['likes'],
     );
   }
 
@@ -103,10 +106,11 @@ class Art extends Equatable {
       imageUrl: '',
       name: '',
       biddingHistory: [],
-      price: 0);
+      price: 0,
+      likes: 0);
   //Art(id: '', name: '', imageUrl: '', price: 0);
   @override
   List<Object?> get props =>
-      [id, addedBy, imageUrl, name, biddingHistory, price];
+      [id, addedBy, imageUrl, name, biddingHistory, price, likes];
   //List<Object?> get props => [id, name, imageUrl, price];
 }

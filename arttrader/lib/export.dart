@@ -21,6 +21,7 @@ export 'presentation/screens/add/widgets/art_camera.dart';
 
 export 'presentation/screens/bids/bids_page.dart';
 export 'presentation/screens/details/details.dart';
+export 'presentation/screens/details/widgets/place_bid.dart';
 export 'presentation/screens/home/home.dart';
 export 'presentation/screens/home/widgets/custom_bottom_bar.dart';
 export 'presentation/screens/login/view/login_view.dart';
@@ -69,7 +70,8 @@ export 'package:carousel_slider/carousel_slider.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:connectivity_plus/connectivity_plus.dart';
-
+export 'package:shared_preferences/shared_preferences.dart';
+export 'package:like_button/like_button.dart';
 
 
 //other

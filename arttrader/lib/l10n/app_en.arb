@@ -23,7 +23,10 @@
   "helpCenter": "Help Center",
   "about": "About",
   "privacyMembers": "Privacy&Members",
-  "logOut": "Log Out"
+  "logOut": "Log Out",
+  "bidValidatorMessage": "Please enter valid bid value",
+  "currentBid": "Current bid",
+  "shareText": "Share"
   
 
 }
