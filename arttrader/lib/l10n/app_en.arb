@@ -16,6 +16,7 @@
   "palaceBid" : "Place a bid",
   "myArts" : "My Arts",
   "myBids" : "My Bids",
+  "mySaved" : "Saved",
   "hi" : "Hi",
   "inviteMembers": "Invite Members",
   "sendFeedback": "Send Feedback",
@@ -26,7 +27,8 @@
   "logOut": "Log Out",
   "bidValidatorMessage": "Please enter valid bid value",
   "currentBid": "Current bid",
-  "shareText": "Share"
+  "shareText": "Share",
+  "addedToSaved": "Added to saved"
   
 
 }

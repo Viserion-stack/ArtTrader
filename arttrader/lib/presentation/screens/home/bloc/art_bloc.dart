@@ -19,6 +19,7 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
     on<AddItemToCollectionRequested>(_onAddItemToCollectionRequested);
     on<PlaceBidRequested>(_onPlaceBidRequested);
     on<UpdateLikeCount>(_onUpdateLikeCount);
+    on<UpdateSavedCount>(_onUpdateSaveCount);
     on<DeleteArtRequested>(_onDeleteArtRequested);
     on<SetListIndex>(_onSetListIndex);
   }
@@ -122,6 +123,24 @@ class ArtBloc extends Bloc<ArtEvent, ArtState> {
       await prefs.setStringList('userLikes', likedArtIds);
 
       await _artRepository.updateLikesCount(event.art, event.newLikeCount);
+    } catch (e) {
+      emit(state.copyWith(status: ArtStatus.error));
+    }
+  }
+  Future<void> _onUpdateSaveCount(
+      UpdateSavedCount event, Emitter<ArtState> emit) async {
+    try {
+      final Future<SharedPreferences> prefs0 = SharedPreferences.getInstance();
+      final SharedPreferences prefs = await prefs0;
+      List<String> savedArtIds = prefs.getStringList('userSavedList') ?? [];
+      if (savedArtIds.contains(event.art.id)) {
+        savedArtIds.remove(event.art.id);
+      } else {
+        savedArtIds.add(event.art.id!);
+      }
+      await prefs.setStringList('userSavedList', savedArtIds);
+
+      await _artRepository.updateSavedCount(event.art, event.newSavedCount);
     } catch (e) {
       emit(state.copyWith(status: ArtStatus.error));
     }

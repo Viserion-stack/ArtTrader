@@ -4,6 +4,7 @@ export 'core/themes/app_theme.dart';
 export 'core/utils/utils.dart';
 export 'core/utils/network_helper.dart';
 export 'core/utils/snackbar_helper.dart';
+export 'core/utils/share.dart';
 
 export 'data/data_providers/app.dart';
 export 'data/data_providers/bloc/app_bloc.dart';
@@ -20,6 +21,7 @@ export 'presentation/screens/add/add_art_form.dart';
 export 'presentation/screens/add/widgets/art_camera.dart';
 
 export 'presentation/screens/bids/bids_page.dart';
+export 'presentation/screens/bids/widgets/widgets.dart';
 export 'presentation/screens/details/details.dart';
 export 'presentation/screens/details/widgets/place_bid.dart';
 export 'presentation/screens/home/home.dart';
@@ -72,6 +74,9 @@ export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:like_button/like_button.dart';
+export 'package:share_plus/share_plus.dart';
+export 'package:http/http.dart';
+
 
 
 //other

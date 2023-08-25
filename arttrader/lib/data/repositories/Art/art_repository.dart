@@ -155,6 +155,21 @@ class ArtRepository {
       throw GetArtsFailure(error.toString());
     }
   }
+  Future<void> updateSavedCount(Art art, int newSavedCount) async {
+    try {
+      CollectionReference artCollection = _firebaseFirestore.collection('art');
+      DocumentReference documentRef = artCollection.doc(art.id);
+      String artId = documentRef.id;
+      await documentRef.update({'savedCount': newSavedCount});
+      debugPrint('Saved count changed  successfully on $artId');
+    } on FirebaseException catch (e) {
+      debugPrint(e.toString());
+      GetArtsFailure.fromCode(e.code);
+    } catch (error) {
+      debugPrint(error.toString());
+      throw GetArtsFailure(error.toString());
+    }
+  }
 
   Future<void> deleteArt(Art art) async {
     try {

@@ -61,6 +61,14 @@ final class UpdateLikeCount extends ArtEvent {
     required this.newLikeCount,
   });
 }
+final class UpdateSavedCount extends ArtEvent {
+  final Art art;
+  final int newSavedCount;
+  const UpdateSavedCount({
+    required this.art,
+    required this.newSavedCount,
+  });
+}
 
 final class SetListIndex extends ArtEvent {
   final int index;

@@ -50,7 +50,9 @@ class AddArtCubit extends Cubit<AddArtState> {
           price: int.tryParse(state.price.value),
           biddingHistory: const [],
           imageUrl: imageUrl,
-          likes: 0);
+        likes: 0,
+        savedCount: 0,
+      );
       await _artRepository.addArt(artToAdd);
 
       emit(state.copyWith(status: FormzSubmissionStatus.success));

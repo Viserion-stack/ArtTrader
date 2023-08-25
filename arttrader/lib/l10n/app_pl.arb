@@ -13,6 +13,7 @@
  "palaceBid" : "Licytuj",
  "myArts" : "Arty",
  "myBids" : "Licytajce",
+ "mySaved" : "Zapisane",
  "hi" : "Cześć",
  "inviteMembers": "Zaproś Znajomych",
  "sendFeedback ": "Wyślij Opinię",
@@ -23,8 +24,8 @@
  "logOut": "Wyloguj",
  "bidValidatorMessage": "Wprowadz poprawną wartość",
  "currentBid": "Aktualna oferta",
-"shareText": "Udostępnij"
-
+ "shareText": "Udostępnij",
+ "addedToSaved": "Dodano do zapisanych"
 
 
 }
