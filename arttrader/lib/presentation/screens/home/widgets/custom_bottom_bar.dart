@@ -11,6 +11,11 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
+    // ignore: invalid_use_of_protected_member
+    if (controller.hasListeners) {
+      controller.closeView(controller.text);
+      controller.removeListener(() {});
+    }
     AppStatus status = AppStatus.authenticated;
     switch (index) {
       case 0:
@@ -18,6 +23,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         status = AppStatus.home;
       case 1:
         status = AppStatus.search;
+
       case 2:
         status = AppStatus.add;
       case 3:
