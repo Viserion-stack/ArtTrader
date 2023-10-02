@@ -36,6 +36,9 @@ class App extends StatelessWidget {
             BlocProvider<ConectivityBloc>(
               create: (context) => ConectivityBloc()..add(ConectivityObserve()),
             ),
+            ChangeNotifierProvider(
+              create: (context) => SearcHistoryState()..loadFromPrefs(),
+            ),
           ],
           child: const AppView(),
         ),

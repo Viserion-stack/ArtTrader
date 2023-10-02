@@ -66,6 +66,8 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     artList = context.select((ArtBloc artBloc) => artBloc.state.artCollection!);
+    final searcHistoryState = context.watch<SearcHistoryState>();
+    searcHistory = searcHistoryState.searcHistory;
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -100,6 +102,7 @@ class _SearchPageState extends State<SearchPage> {
                     onPressed: () {
                       searcHistory.add(controller.text);
                       searcHistory = searcHistory.reversed.toSet().toList();
+                      searcHistoryState.saveToPrefs(searcHistory);
                       controller.closeView(controller.text);
                     },
                     icon: const Icon(
@@ -140,7 +143,6 @@ class _SearchPageState extends State<SearchPage> {
                     onTap: () {
                       controller.openView();
                     },
-                    
                   );
                 },
                 suggestionsBuilder:

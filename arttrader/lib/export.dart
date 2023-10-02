@@ -44,8 +44,9 @@ export 'presentation/screens/home/bloc/art_state.dart';
 export 'presentation/screens/signup/cubit/sign_up_cubit.dart';
 export 'presentation/screens/login/cubit/login_cubit.dart';
 export 'presentation/screens/login/cubit/login_state.dart';
+//Provider
+export 'presentation/screens/search/provider/search_provider.dart';
 
-//Models
 export 'data/models/art/art.dart';
 export 'data/models/art/bid.dart';
 export 'data/models/art/name.dart';
@@ -76,8 +77,7 @@ export 'package:shared_preferences/shared_preferences.dart';
 export 'package:like_button/like_button.dart';
 export 'package:share_plus/share_plus.dart';
 export 'package:http/http.dart';
-
-
+export 'package:provider/provider.dart';
 
 //other
 export 'dart:typed_data';
