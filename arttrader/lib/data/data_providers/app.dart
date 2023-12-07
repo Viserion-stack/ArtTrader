@@ -52,40 +52,47 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      //locale: const Locale('pl'),
-      supportedLocales: AppLocalizations.supportedLocales,
-      theme: CustomTheme.darkTheme,
-      home: Scaffold(
-        //appBar: CustomAppBar(userEmail: context.select((value) => null), userPhotoUrl: userPhotoUrl),
-        body: BlocConsumer<ConectivityBloc, ConectivityState>(
-          listener: (context, state) {
-            if (state.status == ConectivityStatus.offline) {
-              SnackbarHelper.showSnackBar(
-                context,
-                context.strings.connectionOffline,
-              );
-            } else if (state.status == ConectivityStatus.online) {
-              SnackbarHelper.showSnackBar(
-                context,
-                context.strings.connectionOnline,
-              );
-            }
-          },
-          builder: (context, state) {
-            return FlowBuilder<AppStatus>(
-              state: context.select((AppBloc bloc) => bloc.state.status),
-              onGeneratePages: onGenerateAppViewPages,
-              observers: [
-                HeroController(),
-              ],
-            );
-          },
-        ),
+    return BlocConsumer<AppBloc, AppState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          //locale: const Locale('pl'),
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: CustomTheme.darkTheme,
+          home: Scaffold(
+            //appBar: CustomAppBar(userEmail: context.select((value) => null), userPhotoUrl: userPhotoUrl),
+            body: BlocConsumer<ConectivityBloc, ConectivityState>(
+              listener: (context, state) {
+                if (state.status == ConectivityStatus.offline) {
+                  SnackbarHelper.showSnackBar(
+                    context,
+                    context.strings.connectionOffline,
+                  );
+                } else if (state.status == ConectivityStatus.online) {
+                  SnackbarHelper.showSnackBar(
+                    context,
+                    context.strings.connectionOnline,
+                  );
+                }
+              },
+              builder: (context, state) {
+                return FlowBuilder<AppStatus>(
+                  state: context.select((AppBloc bloc) => bloc.state.status),
+                  onGeneratePages: onGenerateAppViewPages,
+                  observers: [
+                    HeroController(),
+                  ],
+                );
+              },
+            ),
 
-        bottomNavigationBar: const CustomBottomBar(),
-      ),
+            bottomNavigationBar: state.status == AppStatus.unauthenticated
+                ? null
+                : const CustomBottomBar(),
+          ),
+        );
+      },
     );
   }
 }

@@ -16,7 +16,6 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   late List<Art> artList;
   late List<Art> selectedArts = [];
-  //TODO set seacHistory shloud be stored on device
   late List<String> searcHistory = [];
 
   final TextEditingController searchController = TextEditingController();
